@@ -46,7 +46,7 @@ export function CheckoutDialog({
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!plan || !user) return;
+    if (!plan) return;
     const parsed = schema.safeParse(form);
     if (!parsed.success) {
       toast.error(parsed.error.issues[0]?.message ?? "Invalid input");
@@ -59,12 +59,12 @@ export function CheckoutDialog({
     setSubmitting(true);
     try {
       const ext = file.name.split(".").pop() ?? "png";
-      const path = `${user.id}/${crypto.randomUUID()}.${ext}`;
+      const path = `${user?.id ?? "guest"}/${crypto.randomUUID()}.${ext}`;
       const { error: upErr } = await supabase.storage.from("receipts").upload(path, file);
       if (upErr) throw upErr;
 
       const { error } = await supabase.from("orders").insert({
-        user_id: user.id,
+        user_id: user?.id ?? null,
         plan_key: plan.key,
         price_mmk: plan.price,
         receipt_path: path,
