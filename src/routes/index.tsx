@@ -1,4 +1,4 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { ShieldCheck, Sparkles, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -7,7 +7,6 @@ import { PlanCard } from "@/components/PlanCard";
 import { CheckoutDialog } from "@/components/CheckoutDialog";
 import { TelegramFab } from "@/components/TelegramFab";
 import { PaymentAccounts } from "@/components/PaymentAccounts";
-import { useAuth } from "@/hooks/useAuth";
 import { useLang } from "@/lib/i18n";
 import { PLANS, type Plan } from "@/lib/plans";
 
@@ -32,8 +31,6 @@ export const Route = createFileRoute("/")({
 
 function Home() {
   const { t } = useLang();
-  const { user } = useAuth();
-  const navigate = useNavigate();
   const [plan, setPlan] = useState<Plan | null>(null);
   const [open, setOpen] = useState(false);
 
