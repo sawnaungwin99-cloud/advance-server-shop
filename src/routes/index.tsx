@@ -1,24 +1,122 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { useState } from "react";
+import { Lock, ShieldCheck, Sparkles, Zap } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Header } from "@/components/Header";
+import { PlanCard } from "@/components/PlanCard";
+import { CheckoutDialog } from "@/components/CheckoutDialog";
+import { TelegramFab } from "@/components/TelegramFab";
+import { PaymentAccounts } from "@/components/PaymentAccounts";
+import { useAuth } from "@/hooks/useAuth";
+import { useLang } from "@/lib/i18n";
+import { PLANS, type Plan } from "@/lib/plans";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
 export const Route = createFileRoute("/")({
-  component: Index,
+  head: () => ({
+    meta: [
+      { title: "SNW Advance Server Shop — MLBB Advance Server Accounts" },
+      {
+        name: "description",
+        content:
+          "Buy trusted Mobile Legends Advance Server accounts from SNW. Free diamonds, early heroes, events and buff/nerf previews. KBZPay & WavePay accepted.",
+      },
+      { property: "og:title", content: "SNW Advance Server Shop — MLBB Advance Server Accounts" },
+      {
+        property: "og:description",
+        content: "Trusted Mobile Legends Advance Server accounts. Free diamonds, early heroes, instant delivery in ~5 minutes.",
+      },
+    ],
+  }),
+  component: Home,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
-function Index() {
+function Home() {
+  const { t } = useLang();
+  const { user } = useAuth();
+  const [plan, setPlan] = useState<Plan | null>(null);
+  const [open, setOpen] = useState(false);
+
+  const onBuy = (p: Plan) => {
+    setPlan(p);
+    setOpen(true);
+  };
+
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
+    <div className="min-h-screen">
+      <Header />
+
+      <main>
+        <section className="hero-aura relative overflow-hidden px-4 py-16 sm:py-24">
+          <div className="mx-auto max-w-3xl text-center">
+            <span className="inline-flex items-center gap-2 rounded-full border border-primary/40 bg-primary/10 px-3 py-1 text-xs text-primary">
+              <Sparkles className="size-3.5" /> Mobile Legends Advance Server
+            </span>
+            <h1 className="mt-5 text-2xl font-bold leading-snug sm:text-4xl">{t("hero_title")}</h1>
+            <p className="mx-auto mt-4 max-w-2xl text-sm leading-loose text-muted-foreground sm:text-base">
+              {t("hero_sub")}
+            </p>
+            <Button asChild size="lg" className="mt-8 glow-cyan">
+              <a href="#plans">{t("hero_cta")}</a>
+            </Button>
+
+            <div className="mx-auto mt-10 grid max-w-xl grid-cols-3 gap-3 text-xs text-muted-foreground">
+              <div className="metal-card rounded-xl p-3">
+                <Zap className="mx-auto mb-1 size-4 text-gold" />၅ မိနစ်အတွင်း
+              </div>
+              <div className="metal-card rounded-xl p-3">
+                <ShieldCheck className="mx-auto mb-1 size-4 text-primary" />
+                စိတ်ချရသော ဝန်ဆောင်မှု
+              </div>
+              <div className="metal-card rounded-xl p-3">
+                <Sparkles className="mx-auto mb-1 size-4 text-gold" />
+                Free Diamonds
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="plans" className="mx-auto max-w-6xl px-4 pb-20">
+          <div className="mb-8 text-center">
+            <h2 className="text-2xl font-bold text-gradient sm:text-3xl">{t("plans_title")}</h2>
+            <p className="mt-2 text-sm text-muted-foreground">{t("plans_sub")}</p>
+          </div>
+
+          {user ? (
+            <>
+              <div className="grid gap-6 md:grid-cols-3">
+                {PLANS.map((p) => (
+                  <PlanCard key={p.key} plan={p} onBuy={onBuy} />
+                ))}
+              </div>
+
+              <div className="mt-12">
+                <h3 className="mb-3 text-center text-lg font-semibold text-gold">{t("pay_title")}</h3>
+                <div className="mx-auto max-w-2xl">
+                  <PaymentAccounts />
+                </div>
+              </div>
+            </>
+          ) : (
+            <div className="metal-card mx-auto max-w-md rounded-2xl p-8 text-center glow-cyan">
+              <span className="mx-auto flex size-12 items-center justify-center rounded-full bg-primary/15">
+                <Lock className="size-5 text-primary" />
+              </span>
+              <h3 className="mt-4 text-lg font-semibold">{t("gate_title")}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{t("gate_desc")}</p>
+              <Button asChild className="mt-6 w-full glow-cyan">
+                <Link to="/auth">{t("gate_cta")}</Link>
+              </Button>
+            </div>
+          )}
+        </section>
+      </main>
+
+      <footer className="border-t border-border/70 px-4 py-8 text-center text-xs text-muted-foreground">
+        © {new Date().getFullYear()} SNW Advance Server Shop
+      </footer>
+
+      <CheckoutDialog plan={plan} open={open} onOpenChange={setOpen} />
+      <TelegramFab />
     </div>
   );
 }
