@@ -29,7 +29,7 @@ export type Database = {
           status: string
           target_gmail: string
           updated_at: string
-          user_id: string
+          user_id: string | null
         }
         Insert: {
           admin_note?: string | null
@@ -45,7 +45,7 @@ export type Database = {
           status?: string
           target_gmail: string
           updated_at?: string
-          user_id: string
+          user_id?: string | null
         }
         Update: {
           admin_note?: string | null
@@ -61,7 +61,7 @@ export type Database = {
           status?: string
           target_gmail?: string
           updated_at?: string
-          user_id?: string
+          user_id?: string | null
         }
         Relationships: []
       }
