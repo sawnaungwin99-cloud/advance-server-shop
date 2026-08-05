@@ -38,10 +38,6 @@ function Home() {
   const [open, setOpen] = useState(false);
 
   const onBuy = (p: Plan) => {
-    if (!user) {
-      navigate({ to: "/auth" });
-      return;
-    }
     setPlan(p);
     setOpen(true);
   };
