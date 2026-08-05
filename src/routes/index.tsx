@@ -81,33 +81,18 @@ function Home() {
             <p className="mt-2 text-sm text-muted-foreground">{t("plans_sub")}</p>
           </div>
 
-          {user ? (
-            <>
-              <div className="grid gap-6 md:grid-cols-3">
-                {PLANS.map((p) => (
-                  <PlanCard key={p.key} plan={p} onBuy={onBuy} />
-                ))}
-              </div>
+          <div className="grid gap-6 md:grid-cols-3">
+            {PLANS.map((p) => (
+              <PlanCard key={p.key} plan={p} onBuy={onBuy} />
+            ))}
+          </div>
 
-              <div className="mt-12">
-                <h3 className="mb-3 text-center text-lg font-semibold text-gold">{t("pay_title")}</h3>
-                <div className="mx-auto max-w-2xl">
-                  <PaymentAccounts />
-                </div>
-              </div>
-            </>
-          ) : (
-            <div className="metal-card mx-auto max-w-md rounded-2xl p-8 text-center glow-cyan">
-              <span className="mx-auto flex size-12 items-center justify-center rounded-full bg-primary/15">
-                <Lock className="size-5 text-primary" />
-              </span>
-              <h3 className="mt-4 text-lg font-semibold">{t("gate_title")}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{t("gate_desc")}</p>
-              <Button asChild className="mt-6 w-full glow-cyan">
-                <Link to="/auth">{t("gate_cta")}</Link>
-              </Button>
+          <div className="mt-12">
+            <h3 className="mb-3 text-center text-lg font-semibold text-gold">{t("pay_title")}</h3>
+            <div className="mx-auto max-w-2xl">
+              <PaymentAccounts />
             </div>
-          )}
+          </div>
         </section>
       </main>
 
