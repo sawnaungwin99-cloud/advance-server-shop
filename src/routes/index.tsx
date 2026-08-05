@@ -33,10 +33,15 @@ export const Route = createFileRoute("/")({
 function Home() {
   const { t } = useLang();
   const { user } = useAuth();
+  const navigate = useNavigate();
   const [plan, setPlan] = useState<Plan | null>(null);
   const [open, setOpen] = useState(false);
 
   const onBuy = (p: Plan) => {
+    if (!user) {
+      navigate({ to: "/auth" });
+      return;
+    }
     setPlan(p);
     setOpen(true);
   };
