@@ -46,6 +46,7 @@ export const dict: Dict = {
     en: "မှတ်ချက် အခုပို့မယ့် Gmail က Mlbb နဲ့ လုံးဝ(လုံးဝ) ချိတ်မထားတဲ့ Gmail ဖြစ်ဖို့အရေးကြီးပါတယ်",
   },
   f_ign: { my: "Advance Server မှာထည့်ချင်တဲ့ Name ( နာမည် ) ထည့်ပါ", en: "Advance Server မှာထည့်ချင်တဲ့ Name ( နာမည် ) ထည့်ပါ" },
+  f_telegram: { my: "Telegram Username ထည့်ပါ (ဥပမာ @username)", en: "Telegram Username (e.g. @username)" },
   f_receipt: { my: "ငွေလွှဲပြေစာ Screenshot တင်ပေးပါ", en: "Upload Payment Screenshot (ငွေလွှဲပြေစာ Screenshot တင်ပေးပါ)" },
   pay_title: { my: "ငွေပေးချေရန် အကောင့်များ", en: "Payment Accounts" },
   acc_name: { my: "အကောင့်အမည်", en: "Account Name" },

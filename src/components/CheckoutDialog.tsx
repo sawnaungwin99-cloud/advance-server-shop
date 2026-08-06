@@ -9,6 +9,7 @@ import { Label } from "@/components/ui/label";
 import { PaymentAccounts } from "@/components/PaymentAccounts";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
+import { notifyOrder } from "@/lib/telegram.functions";
 import { useLang } from "@/lib/i18n";
 import { TELEGRAM_URL, type Plan } from "@/lib/plans";
 
@@ -17,6 +18,7 @@ const schema = z.object({
   phone: z.string().trim().min(6).max(20),
   target_gmail: z.string().trim().email().max(255),
   ign: z.string().trim().min(1).max(60),
+  telegram_username: z.string().trim().max(80),
 });
 
 export function CheckoutDialog({
@@ -33,14 +35,14 @@ export function CheckoutDialog({
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState(false);
   const [file, setFile] = useState<File | null>(null);
-  const [form, setForm] = useState({ full_name: "", phone: "", target_gmail: "", ign: "" });
+  const [form, setForm] = useState({ full_name: "", phone: "", target_gmail: "", ign: "", telegram_username: "" });
 
   const close = (v: boolean) => {
     onOpenChange(v);
     if (!v) {
       setDone(false);
       setFile(null);
-      setForm({ full_name: "", phone: "", target_gmail: "", ign: "" });
+      setForm({ full_name: "", phone: "", target_gmail: "", ign: "", telegram_username: "" });
     }
   };
 
@@ -71,6 +73,19 @@ export function CheckoutDialog({
         ...parsed.data,
       });
       if (error) throw error;
+
+      try {
+        await notifyOrder({
+          data: {
+            ...parsed.data,
+            plan_label: plan.priceLabel,
+            receipt_path: path,
+          },
+        });
+      } catch (notifyErr) {
+        console.error("Telegram notify failed", notifyErr);
+      }
+
       setDone(true);
     } catch (err) {
       toast.error(err instanceof Error ? err.message : "Order failed");
@@ -159,6 +174,17 @@ export function CheckoutDialog({
                   required
                   value={form.ign}
                   onChange={(e) => setForm({ ...form, ign: e.target.value })}
+                />
+              </div>
+
+              <div className="space-y-1.5">
+                <Label htmlFor="telegram_username">{t("f_telegram")}</Label>
+                <Input
+                  id="telegram_username"
+                  maxLength={80}
+                  placeholder="@username"
+                  value={form.telegram_username}
+                  onChange={(e) => setForm({ ...form, telegram_username: e.target.value })}
                 />
               </div>
 
