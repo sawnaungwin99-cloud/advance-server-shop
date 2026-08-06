@@ -49,6 +49,12 @@ export function CheckoutDialog({
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!plan) return;
+    if (!user) {
+      toast.error("Order မတင်ခင် Login ဝင်ပေးပါ / Please log in first.");
+      onOpenChange(false);
+      navigate({ to: "/auth" });
+      return;
+    }
     const parsed = schema.safeParse(form);
     if (!parsed.success) {
       toast.error(parsed.error.issues[0]?.message ?? "Invalid input");
