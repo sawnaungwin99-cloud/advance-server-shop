@@ -28,6 +28,7 @@ export type Database = {
           receipt_path: string | null
           status: string
           target_gmail: string
+          telegram_username: string | null
           updated_at: string
           user_id: string | null
         }
@@ -44,6 +45,7 @@ export type Database = {
           receipt_path?: string | null
           status?: string
           target_gmail: string
+          telegram_username?: string | null
           updated_at?: string
           user_id?: string | null
         }
@@ -60,6 +62,7 @@ export type Database = {
           receipt_path?: string | null
           status?: string
           target_gmail?: string
+          telegram_username?: string | null
           updated_at?: string
           user_id?: string | null
         }
