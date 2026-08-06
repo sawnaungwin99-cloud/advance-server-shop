@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "@tanstack/react-router";
 import { Send, Upload } from "lucide-react";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -32,6 +33,7 @@ export function CheckoutDialog({
 }) {
   const { t } = useLang();
   const { user } = useAuth();
+  const navigate = useNavigate();
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState(false);
   const [file, setFile] = useState<File | null>(null);
