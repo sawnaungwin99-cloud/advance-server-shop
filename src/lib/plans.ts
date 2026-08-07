@@ -9,6 +9,7 @@ export type Plan = {
   overview: string;
   warning: string;
   required: string[];
+  features: string[];
 };
 
 export const FEATURES_MY = [
@@ -37,7 +38,7 @@ export const PLANS: Plan[] = [
   {
     key: "basic-8000",
     price: 8000,
-    priceLabel: "8,000 MMK",
+    priceLabel: "8,000 ကျပ်",
     titleMy: "၈,၀၀၀ ကျပ် Plan",
     nameMy: "Basic Advance Server",
     nameEn: "Basic Advance Server",
@@ -46,11 +47,18 @@ export const PLANS: Plan[] = [
     warning:
       "အကောင့်အသစ်ချိတ်လိုက်ပါက လက်ရှိဆော့နေသော Main အကောင့်မှ ထွက်သွားမည်ဖြစ်ပါသည်။ ထို့ကြောင့် Main အကောင့်ကို ပြန်လည်ဝင်ရောက်တတ်ရန် လိုအပ်ပါသည်။ အကောင့်ဖွင့်ပြီးပါက မိတ်ဆွေ၏ Gmail နှင့် အပိုင်ချိတ်ပေးမည်ဖြစ်သောကြောင့် Password ကို စိတ်ကြိုက်ပြောင်းလဲနိုင်ပါသည်။",
     required: REQUIRED_ITEMS_MY,
+    features: [
+      "Advance Server တစ်ခုပဲပါတယ်",
+      "Diamond လဲလို့ရပါတယ်",
+      "Weekly လဲလို့ရပါတယ်",
+      "အကောင့်ချိတ်လို့ရပါတယ်",
+      "Error လုံးဝမရှိပါ",
+    ],
   },
   {
     key: "dual-15000",
     price: 15000,
-    priceLabel: "15,000 MMK",
+    priceLabel: "15,000 ကျပ်",
     titleMy: "၁၅,၀၀၀ ကျပ် Plan",
     nameMy: "Dual Server Account",
     nameEn: "Dual Server Account",
@@ -60,11 +68,19 @@ export const PLANS: Plan[] = [
     warning:
       "Bro အခုလက်ရှိဆော့နေတဲ့အကောင့်ကနေ ထွက်သွားပါမည်။ ကျနော်ပေးတဲ့ Moonton အကောင့်နဲ့ဝင်ပြီး Advance Server ကိုတန်းဆော့လို့ရပါပြီ (Bro ရဲ့ Main အကောင့်ကနေထွက်သွားမှာဖြစ်လို့ Main အကောင့်ကိုပြန်ဝင်တတ်ဖို့တော့ လိုပါမည်)။ အကောင့်ဖောက်ပြီးရင် Bro ရဲ့ Gmail နဲ့အပိုင်ချိတ်ပေးလိုက်မှာဖြစ်လို့ Password လည်း စိတ်ကြိုက်ပြောင်းလဲနိုင်ပါမည်။",
     required: REQUIRED_ITEMS_MY,
+    features: [
+      "Advance Server နဲ့ Normal Server နှစ်ခုပါ",
+      "Server စုစုပေါင်းနှစ်ခုပါမယ်",
+      "Diamond လဲလို့ရပါတယ်",
+      "Weekly လဲလို့ရပါတယ်",
+      "အကောင့်ချိတ်လို့ရပါတယ်",
+      "Error လုံးဝမရှိပါ",
+    ],
   },
   {
     key: "ultimate-25000",
     price: 25000,
-    priceLabel: "25,000 MMK",
+    priceLabel: "25,000 ကျပ်",
     titleMy: "၂၅,၀၀၀ ကျပ် Plan",
     nameMy: "Ultimate Multi-Server Account",
     nameEn: "Ultimate Multi-Server Account",
@@ -73,5 +89,13 @@ export const PLANS: Plan[] = [
     warning:
       "အကောင့်အသစ်ချိတ်လိုက်ပါက လက်ရှိဆော့နေသော Main အကောင့်မှ ထွက်သွားမည်ဖြစ်ပါသည်။ ထို့ကြောင့် Main အကောင့်ကို ပြန်လည်ဝင်ရောက်တတ်ရန် လိုအပ်ပါသည်။ အကောင့်ဖွင့်ပြီးပါက မိတ်ဆွေ၏ Gmail နှင့် အပိုင်ချိတ်ပေးမည်ဖြစ်သောကြောင့် Password ကို စိတ်ကြိုက်ပြောင်းလဲနိုင်ပါသည်။",
     required: REQUIRED_ITEMS_MY,
+    features: [
+      "Normal 1 ခု + Advance Server 5 ခုပါမယ်",
+      "Server စုစုပေါင်း 6 ခုပါမယ်",
+      "Diamond လဲလို့ရပါတယ်",
+      "Weekly လဲလို့ရပါတယ်",
+      "အကောင့်ချိတ်လို့ရပါတယ်",
+      "Error လုံးဝမရှိပါ",
+    ],
   },
 ];

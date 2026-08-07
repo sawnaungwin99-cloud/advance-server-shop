@@ -6,7 +6,6 @@ import { Header } from "@/components/Header";
 import { PlanCard } from "@/components/PlanCard";
 import { CheckoutDialog } from "@/components/CheckoutDialog";
 import { TelegramFab } from "@/components/TelegramFab";
-import { WelcomeNotice } from "@/components/WelcomeNotice";
 import { PaymentAccounts } from "@/components/PaymentAccounts";
 import { useLang } from "@/lib/i18n";
 import { PLANS, type Plan } from "@/lib/plans";
@@ -48,7 +47,8 @@ function Home() {
         <section className="hero-aura relative overflow-hidden px-4 py-16 sm:py-24">
           <div className="mx-auto max-w-3xl text-center">
             <span className="inline-flex items-center gap-2 rounded-full border border-primary/40 bg-primary/10 px-3 py-1 text-xs text-primary">
-              <Sparkles className="size-3.5" /> Mobile Legends Advance Server
+              <Sparkles className="size-3.5" />
+              <span className="snw-gaming text-lg leading-none sm:text-xl">SNW GAMING</span>
             </span>
             <h1 className="mt-5 text-2xl font-bold leading-snug sm:text-4xl">{t("hero_title")}</h1>
             <p className="mx-auto mt-4 max-w-2xl text-sm leading-loose text-muted-foreground sm:text-base">
@@ -101,7 +101,6 @@ function Home() {
 
       <CheckoutDialog plan={plan} open={open} onOpenChange={setOpen} />
       <TelegramFab />
-      <WelcomeNotice />
     </div>
   );
 }
