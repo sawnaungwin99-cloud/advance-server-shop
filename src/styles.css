@@ -154,3 +154,14 @@
   letter-spacing: 0.14em;
   text-transform: uppercase;
 }
+
+@utility snw-gaming {
+  font-family: "Bangers", var(--font-display);
+  letter-spacing: 0.06em;
+  color: oklch(0.88 0.19 100);
+  -webkit-text-stroke: 2px oklch(0.12 0 0);
+  paint-order: stroke fill;
+  text-shadow:
+    0 3px 0 oklch(0.12 0 0),
+    0 6px 14px oklch(0.1 0 0 / 0.75);
+}
