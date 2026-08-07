@@ -8,6 +8,7 @@ export const dict: Dict = {
   brand: { my: "SNW ADVANCE SERVER SHOP", en: "SNW ADVANCE SERVER SHOP" },
   nav_shop: { my: "ဈေးဆိုင်", en: "Shop" },
   nav_orders: { my: "ကျွန်ုပ်၏ အော်ဒါများ", en: "My Orders" },
+  nav_contact: { my: "ဆက်သွယ်ရန်", en: "Contact Us" },
   nav_admin: { my: "အက်ဒမင်", en: "Admin" },
   nav_login: { my: "ဝင်ရောက်ရန်", en: "Sign in" },
   nav_logout: { my: "ထွက်ရန်", en: "Sign out" },

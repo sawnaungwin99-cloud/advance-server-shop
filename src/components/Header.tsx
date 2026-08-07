@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "@tanstack/react-router";
 import { Gamepad2, LogOut, Menu } from "lucide-react";
 import { useState } from "react";
+import { ContactDialog } from "@/components/ContactDialog";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
 import { useLang } from "@/lib/i18n";
@@ -10,6 +11,7 @@ export function Header() {
   const { user, isAdmin, signOut } = useAuth();
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
+  const [contactOpen, setContactOpen] = useState(false);
 
   const handleSignOut = async () => {
     await signOut();
@@ -34,6 +36,16 @@ export function Header() {
           {t("nav_orders")}
         </Link>
       )}
+      <button
+        type="button"
+        className="text-left text-sm text-muted-foreground transition-colors hover:text-primary"
+        onClick={() => {
+          setOpen(false);
+          setContactOpen(true);
+        }}
+      >
+        {t("nav_contact")}
+      </button>
       {isAdmin && (
         <Link
           to="/admin"
@@ -109,6 +121,7 @@ export function Header() {
           )}
         </div>
       )}
+      <ContactDialog open={contactOpen} onOpenChange={setContactOpen} />
     </header>
   );
 }
