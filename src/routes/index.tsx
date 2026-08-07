@@ -46,9 +46,9 @@ function Home() {
       <main>
         <section className="hero-aura relative overflow-hidden px-4 py-16 sm:py-24">
           <div className="mx-auto max-w-3xl text-center">
-            <span className="inline-flex items-center gap-2 rounded-full border border-primary/40 bg-primary/10 px-3 py-1 text-xs text-primary">
-              <Sparkles className="size-3.5" />
-              <span className="snw-gaming text-lg leading-none sm:text-xl">SNW GAMING</span>
+            <span className="inline-flex items-center gap-2 rounded-full border border-primary/40 bg-primary/10 px-4 py-1.5 text-xs text-primary">
+              <Sparkles className="size-4" />
+              <span className="snw-gaming text-2xl leading-none sm:text-3xl">SNW GAMING</span>
             </span>
             <h1 className="mt-5 text-2xl font-bold leading-snug sm:text-4xl">{t("hero_title")}</h1>
             <p className="mx-auto mt-4 max-w-2xl text-sm leading-loose text-muted-foreground sm:text-base">
