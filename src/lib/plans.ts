@@ -38,12 +38,12 @@ export const PLANS: Plan[] = [
   {
     key: "basic-8000",
     price: 8000,
-    priceLabel: "8,000 ကျပ်",
-    titleMy: "၈,၀၀၀ ကျပ် Plan",
+    priceLabel: "8,000 MMK",
+    titleMy: "၈,၀၀၀ MMK Plan",
     nameMy: "Basic Advance Server",
     nameEn: "Basic Advance Server",
     overview:
-      "Advance Server သီးသန့်ပါဝင်သော အကောင့်ဖြစ်ပြီး ဈေးနှုန်းမှာ ၈,၀၀၀ ကျပ် ဖြစ်ပါသည်။ ကျွန်တော်ပေးအပ်သော Moonton Account ဖြင့် Login ဝင်လိုက်ရုံဖြင့် Advance Server ကို တိုက်ရိုက်ရောက်ရှိသွားမည်ဖြစ်ပါသည်။",
+      "Advance Server သီးသန့်ပါဝင်သော အကောင့်ဖြစ်ပြီး ဈေးနှုန်းမှာ ၈,၀၀၀ MMK ဖြစ်ပါသည်။ ကျွန်တော်ပေးအပ်သော Moonton Account ဖြင့် Login ဝင်လိုက်ရုံဖြင့် Advance Server ကို တိုက်ရိုက်ရောက်ရှိသွားမည်ဖြစ်ပါသည်။",
     warning:
       "အကောင့်အသစ်ချိတ်လိုက်ပါက လက်ရှိဆော့နေသော Main အကောင့်မှ ထွက်သွားမည်ဖြစ်ပါသည်။ ထို့ကြောင့် Main အကောင့်ကို ပြန်လည်ဝင်ရောက်တတ်ရန် လိုအပ်ပါသည်။ အကောင့်ဖွင့်ပြီးပါက မိတ်ဆွေ၏ Gmail နှင့် အပိုင်ချိတ်ပေးမည်ဖြစ်သောကြောင့် Password ကို စိတ်ကြိုက်ပြောင်းလဲနိုင်ပါသည်။",
     required: REQUIRED_ITEMS_MY,
@@ -58,8 +58,8 @@ export const PLANS: Plan[] = [
   {
     key: "dual-15000",
     price: 15000,
-    priceLabel: "15,000 ကျပ်",
-    titleMy: "၁၅,၀၀၀ ကျပ် Plan",
+    priceLabel: "15,000 MMK",
+    titleMy: "၁၅,၀၀၀ MMK Plan",
     nameMy: "Dual Server Account",
     nameEn: "Dual Server Account",
     popular: true,
@@ -80,8 +80,8 @@ export const PLANS: Plan[] = [
   {
     key: "ultimate-25000",
     price: 25000,
-    priceLabel: "25,000 ကျပ်",
-    titleMy: "၂၅,၀၀၀ ကျပ် Plan",
+    priceLabel: "25,000 MMK",
+    titleMy: "၂၅,၀၀၀ MMK Plan",
     nameMy: "Ultimate Multi-Server Account",
     nameEn: "Ultimate Multi-Server Account",
     overview:
