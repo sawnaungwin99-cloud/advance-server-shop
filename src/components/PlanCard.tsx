@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Check, Clock, Info, TriangleAlert } from "lucide-react";
-import { FEATURES_MY, type Plan } from "@/lib/plans";
+import { type Plan } from "@/lib/plans";
 import { useLang } from "@/lib/i18n";
 
 export function PlanCard({ plan, onBuy }: { plan: Plan; onBuy: (plan: Plan) => void }) {
@@ -27,7 +27,7 @@ export function PlanCard({ plan, onBuy }: { plan: Plan; onBuy: (plan: Plan) => v
         <p className="text-sm text-muted-foreground">{plan.titleMy}</p>
 
         <ul className="mt-5 space-y-2.5">
-          {FEATURES_MY.map((f) => (
+          {plan.features.map((f) => (
             <li key={f} className="flex items-start gap-2 text-sm leading-relaxed">
               <span className="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-primary/15">
                 <Check className="size-3 text-primary" />

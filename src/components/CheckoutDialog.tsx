@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useNavigate } from "@tanstack/react-router";
 import { Send, Upload } from "lucide-react";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -33,7 +32,6 @@ export function CheckoutDialog({
 }) {
   const { t } = useLang();
   const { user } = useAuth();
-  const navigate = useNavigate();
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState(false);
   const [file, setFile] = useState<File | null>(null);
@@ -51,12 +49,6 @@ export function CheckoutDialog({
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!plan) return;
-    if (!user) {
-      toast.error("Order မတင်ခင် Login ဝင်ပေးပါ / Please log in first.");
-      onOpenChange(false);
-      navigate({ to: "/auth" });
-      return;
-    }
     const parsed = schema.safeParse(form);
     if (!parsed.success) {
       toast.error(parsed.error.issues[0]?.message ?? "Invalid input");
