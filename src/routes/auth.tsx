@@ -98,26 +98,56 @@ function AuthPage() {
           </TabsList>
 
           <TabsContent value="login">
-            <form onSubmit={login} className="space-y-4 pt-4">
-              <div className="space-y-1.5">
-                <Label htmlFor="l-email">{t("email")}</Label>
-                <Input id="l-email" type="email" required value={email} onChange={(e) => setEmail(e.target.value)} />
-              </div>
-              <div className="space-y-1.5">
-                <Label htmlFor="l-pass">{t("password")}</Label>
-                <Input
-                  id="l-pass"
-                  type="password"
-                  required
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-              </div>
-              <Button type="submit" disabled={loading} className="w-full glow-cyan">
-                {t("auth_login")}
-              </Button>
-            </form>
+            {forgot ? (
+              <form onSubmit={sendReset} className="space-y-4 pt-4">
+                <p className="text-xs text-muted-foreground">
+                  သင့် Email ကိုထည့်ပါ။ စကားဝှက်ပြန်သတ်မှတ်ရန် လင့်ခ်ပို့ပေးပါမည်။ / Enter your email to receive a reset link.
+                </p>
+                <div className="space-y-1.5">
+                  <Label htmlFor="f-email">{t("email")}</Label>
+                  <Input id="f-email" type="email" required value={email} onChange={(e) => setEmail(e.target.value)} />
+                </div>
+                <Button type="submit" disabled={loading} className="w-full glow-cyan">
+                  လင့်ခ်ပို့မည် / Send reset link
+                </Button>
+                <button
+                  type="button"
+                  onClick={() => setForgot(false)}
+                  className="w-full text-xs text-muted-foreground underline-offset-4 hover:underline"
+                >
+                  ← {t("auth_login")}
+                </button>
+              </form>
+            ) : (
+              <form onSubmit={login} className="space-y-4 pt-4">
+                <div className="space-y-1.5">
+                  <Label htmlFor="l-email">{t("email")}</Label>
+                  <Input id="l-email" type="email" required value={email} onChange={(e) => setEmail(e.target.value)} />
+                </div>
+                <div className="space-y-1.5">
+                  <Label htmlFor="l-pass">{t("password")}</Label>
+                  <Input
+                    id="l-pass"
+                    type="password"
+                    required
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                </div>
+                <Button type="submit" disabled={loading} className="w-full glow-cyan">
+                  {t("auth_login")}
+                </Button>
+                <button
+                  type="button"
+                  onClick={() => setForgot(true)}
+                  className="w-full text-xs text-primary underline-offset-4 hover:underline"
+                >
+                  စကားဝှက်မေ့နေပါသလား? / Forgot password?
+                </button>
+              </form>
+            )}
           </TabsContent>
+
 
           <TabsContent value="signup">
             <form onSubmit={signup} className="space-y-4 pt-4">
