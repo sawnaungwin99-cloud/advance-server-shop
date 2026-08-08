@@ -222,7 +222,7 @@ function AdminPage() {
                   <div>Email — <span className="text-foreground/90">{o.target_gmail}</span></div>
                   <div>Game ID / IGN — <span className="text-foreground/90">{o.ign}</span></div>
                   <div>Telegram — <span className="text-foreground/90">{o.telegram_username || "-"}</span></div>
-                  <div>Plan — <span className="text-foreground/90">{plan?.title ?? o.plan_key}</span></div>
+                  <div>Plan — <span className="text-foreground/90">{plan?.titleMy ?? o.plan_key}</span></div>
                 </dl>
               </div>
             );
