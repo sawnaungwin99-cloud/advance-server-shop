@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { ShieldCheck, Sparkles, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -7,6 +7,8 @@ import { PlanCard } from "@/components/PlanCard";
 import { CheckoutDialog } from "@/components/CheckoutDialog";
 import { TelegramFab } from "@/components/TelegramFab";
 import { PaymentAccounts } from "@/components/PaymentAccounts";
+import { WelcomeNotice } from "@/components/WelcomeNotice";
+
 import { useLang } from "@/lib/i18n";
 import { PLANS, type Plan } from "@/lib/plans";
 
@@ -97,10 +99,16 @@ function Home() {
 
       <footer className="border-t border-border/70 px-4 py-8 text-center text-xs text-muted-foreground">
         © {new Date().getFullYear()} SNW Advance Server Shop
+        <span className="mx-2 opacity-40">·</span>
+        <Link to="/admin" className="opacity-50 transition hover:text-primary hover:opacity-100">
+          Admin
+        </Link>
       </footer>
 
+      <WelcomeNotice />
       <CheckoutDialog plan={plan} open={open} onOpenChange={setOpen} />
       <TelegramFab />
+
     </div>
   );
 }
