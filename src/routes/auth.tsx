@@ -30,10 +30,27 @@ function AuthPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [displayName, setDisplayName] = useState("");
+  const [forgot, setForgot] = useState(false);
 
   useEffect(() => {
     if (user) navigate({ to: "/", replace: true });
   }, [user, navigate]);
+
+  const sendReset = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email.trim()) {
+      toast.error("Email ထည့်ပါ / Enter your email");
+      return;
+    }
+    setLoading(true);
+    const { error } = await supabase.auth.resetPasswordForEmail(email.trim(), {
+      redirectTo: `${window.location.origin}/reset-password`,
+    });
+    setLoading(false);
+    if (error) toast.error(error.message);
+    else toast.success("စကားဝှက်ပြန်လည်သတ်မှတ်ရန် လင့်ခ်ကို Email သို့ ပို့ပြီးပါပြီ / Reset link sent.");
+  };
+
 
   const login = async (e: React.FormEvent) => {
     e.preventDefault();
