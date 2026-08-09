@@ -76,30 +76,44 @@ function AdminPage() {
 
   const update = useMutation({
     mutationFn: async ({ id, status }: { id: string; status: string }) => {
-      const { error } = await supabase.from("orders").update({ status }).eq("id", id);
-      if (error) throw error;
-      if (status === "delivered") {
+      let assign: Awaited<ReturnType<typeof assignStockToOrder>> | null = null;
+      if (status === "confirmed" || status === "delivered") {
         try {
-          const res = await notifyDelivered({ data: { order_id: id } });
-          return res;
+          assign = await assignStockToOrder({ data: { order_id: id } });
         } catch {
-          return { telegram: false as const, reason: "send_failed" as const };
+          assign = null;
         }
       }
-      return null;
+      const { error } = await supabase.from("orders").update({ status }).eq("id", id);
+      if (error) throw error;
+      let notify: { telegram: boolean; reason: string } | null = null;
+      if (status === "delivered") {
+        try {
+          notify = await notifyDelivered({ data: { order_id: id } });
+        } catch {
+          notify = { telegram: false, reason: "send_failed" };
+        }
+      }
+      return { assign, notify };
     },
-    onSuccess: (res) => {
+    onSuccess: ({ assign, notify }) => {
       toast.success("Order status updated");
-      if (res && !res.telegram) {
+      if (assign?.assigned === false) {
+        toast.warning("Stock မရှိပါ — ဤ Plan အတွက် အကောင့်အသစ် ထည့်ပါ။");
+      } else if (assign?.assigned) {
+        toast.success("အကောင့်တစ်ခု အလိုအလျောက် ပေးအပ်ပြီးပါပြီ။");
+      }
+      if (notify && !notify.telegram) {
         toast.warning(
-          res.reason === "no_username"
+          notify.reason === "no_username"
             ? "Telegram username မပါသဖြင့် Telegram အကြောင်းကြားချက် မပို့နိုင်ပါ။"
             : "Telegram အကြောင်းကြားချက် မပို့နိုင်ပါ (customer က Bot ကို Start နှိပ်ထားရန်လိုပါသည်)။",
         );
-      } else if (res?.telegram) {
+      } else if (notify?.telegram) {
         toast.success("Telegram အကြောင်းကြားချက် ပို့ပြီးပါပြီ။");
       }
       qc.invalidateQueries({ queryKey: ["all-orders"] });
+      qc.invalidateQueries({ queryKey: ["stock-accounts"] });
     },
     onError: (e) => toast.error(e instanceof Error ? e.message : "Update failed"),
   });
