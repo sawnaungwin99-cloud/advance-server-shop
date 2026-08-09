@@ -18,6 +18,10 @@ import { useAuth } from "@/hooks/useAuth";
 import { useLang } from "@/lib/i18n";
 import { PLANS } from "@/lib/plans";
 import { notifyDelivered } from "@/lib/order-delivery.functions";
+import { assignStockToOrder } from "@/lib/inventory.functions";
+import { AdminInventory } from "@/components/AdminInventory";
+import { DeliveredCredentials } from "@/components/DeliveredCredentials";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export const Route = createFileRoute("/admin")({
   head: () => ({
