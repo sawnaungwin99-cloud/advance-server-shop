@@ -8,6 +8,7 @@ import { CheckoutDialog } from "@/components/CheckoutDialog";
 import { TelegramFab } from "@/components/TelegramFab";
 import { PaymentAccounts } from "@/components/PaymentAccounts";
 import { WelcomeNotice } from "@/components/WelcomeNotice";
+import { VideoTutorials } from "@/components/VideoTutorials";
 
 import { useLang } from "@/lib/i18n";
 import { PLANS, type Plan } from "@/lib/plans";
@@ -95,6 +96,8 @@ function Home() {
             </div>
           </div>
         </section>
+
+        <VideoTutorials />
       </main>
 
       <footer className="border-t border-border/70 px-4 py-8 text-center text-xs text-muted-foreground">

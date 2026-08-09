@@ -12,6 +12,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { notifyOrder } from "@/lib/telegram.functions";
 import { useLang } from "@/lib/i18n";
 import { TELEGRAM_URL, type Plan } from "@/lib/plans";
+import { VIDEO_LOGIN_URL } from "@/lib/videos";
 
 const schema = z.object({
   full_name: z.string().trim().min(2).max(100),
@@ -96,7 +97,7 @@ export function CheckoutDialog({
 
   return (
     <Dialog open={open} onOpenChange={close}>
-      <DialogContent className="max-h-[88vh] overflow-y-auto sm:max-w-lg">
+      <DialogContent className="max-h-[88vh] overflow-y-auto border-white/10 bg-[oklch(0.18_0.02_260/0.92)] backdrop-blur-xl sm:max-w-lg">
         {done ? (
           <div className="space-y-4 py-4 text-center">
             <div className="mx-auto flex size-14 items-center justify-center rounded-full bg-primary/15 glow-cyan">
@@ -106,6 +107,19 @@ export function CheckoutDialog({
               <DialogTitle className="text-center text-xl text-gradient">{t("order_done_title")}</DialogTitle>
             </DialogHeader>
             <p className="text-sm text-muted-foreground">{t("order_done_desc")}</p>
+            <div className="space-y-2 text-left">
+              <p className="text-xs font-semibold text-gold">🔑 ဝယ်ထားတဲ့အကောင့် Login ဝင်နည်း</p>
+              <div className="relative w-full overflow-hidden rounded-xl border border-border/70 pt-[56.25%]">
+                <iframe
+                  src={VIDEO_LOGIN_URL}
+                  title="How to Login"
+                  allow="autoplay; fullscreen"
+                  allowFullScreen
+                  loading="lazy"
+                  className="absolute inset-0 size-full"
+                />
+              </div>
+            </div>
             <Button asChild className="w-full glow-cyan">
               <a href={TELEGRAM_URL} target="_blank" rel="noreferrer noopener">
                 <Send className="size-4" /> {t("telegram_cta")}

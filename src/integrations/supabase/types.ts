@@ -18,6 +18,8 @@ export type Database = {
         Row: {
           admin_note: string | null
           created_at: string
+          delivered_password: string | null
+          delivered_username: string | null
           full_name: string
           id: string
           ign: string
@@ -35,6 +37,8 @@ export type Database = {
         Insert: {
           admin_note?: string | null
           created_at?: string
+          delivered_password?: string | null
+          delivered_username?: string | null
           full_name: string
           id?: string
           ign: string
@@ -52,6 +56,8 @@ export type Database = {
         Update: {
           admin_note?: string | null
           created_at?: string
+          delivered_password?: string | null
+          delivered_username?: string | null
           full_name?: string
           id?: string
           ign?: string
@@ -85,6 +91,47 @@ export type Database = {
           id?: string
         }
         Relationships: []
+      }
+      stock_accounts: {
+        Row: {
+          created_at: string
+          id: string
+          order_id: string | null
+          password: string
+          plan_key: string
+          sold_at: string | null
+          status: string
+          username: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          order_id?: string | null
+          password: string
+          plan_key: string
+          sold_at?: string | null
+          status?: string
+          username: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          order_id?: string | null
+          password?: string
+          plan_key?: string
+          sold_at?: string | null
+          status?: string
+          username?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "stock_accounts_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       user_roles: {
         Row: {

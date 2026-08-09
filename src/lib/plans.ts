@@ -29,9 +29,48 @@ export const REQUIRED_ITEMS_MY = [
 
 export const TELEGRAM_URL = "https://t.me/ssnnww2025";
 
-export const PAYMENTS = [
-  { key: "kbzpay", label: "KBZPay", number: "09980080069", name: "May Su Aung" },
-  { key: "wavepay", label: "WavePay", number: "09980080069", name: "May Su Aung" },
+export type PaymentAccount = {
+  key: string;
+  label: string;
+  number: string;
+  name: string;
+  gradient: string;
+  fg: string;
+  sub: string;
+  btn: string;
+};
+
+export const PAYMENTS: PaymentAccount[] = [
+  {
+    key: "kbzpay",
+    label: "KBZ Pay",
+    number: "09980080069",
+    name: "May Su Aung",
+    gradient: "from-[#1e88ff] via-[#2f9bff] to-[#0b6fd6]",
+    fg: "text-white",
+    sub: "text-white/75",
+    btn: "bg-white/20 text-white hover:bg-white/30",
+  },
+  {
+    key: "wavepay",
+    label: "Wave Pay",
+    number: "09980080069",
+    name: "May Su Aung",
+    gradient: "from-[#ffe600] via-[#ffdc00] to-[#8fe36b]",
+    fg: "text-[#1b1b0d]",
+    sub: "text-[#1b1b0d]/70",
+    btn: "bg-black/15 text-[#1b1b0d] hover:bg-black/25",
+  },
+  {
+    key: "ayapay",
+    label: "AYA Pay",
+    number: "09951535151",
+    name: "Saw Naung Win",
+    gradient: "from-[#e8202f] via-[#ee2f52] to-[#c40f38]",
+    fg: "text-white",
+    sub: "text-white/75",
+    btn: "bg-white/20 text-white hover:bg-white/30",
+  },
 ];
 
 export const PLANS: Plan[] = [

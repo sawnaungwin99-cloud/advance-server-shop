@@ -18,6 +18,10 @@ import { useAuth } from "@/hooks/useAuth";
 import { useLang } from "@/lib/i18n";
 import { PLANS } from "@/lib/plans";
 import { notifyDelivered } from "@/lib/order-delivery.functions";
+import { assignStockToOrder } from "@/lib/inventory.functions";
+import { AdminInventory } from "@/components/AdminInventory";
+import { DeliveredCredentials } from "@/components/DeliveredCredentials";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export const Route = createFileRoute("/admin")({
   head: () => ({
@@ -76,30 +80,44 @@ function AdminPage() {
 
   const update = useMutation({
     mutationFn: async ({ id, status }: { id: string; status: string }) => {
-      const { error } = await supabase.from("orders").update({ status }).eq("id", id);
-      if (error) throw error;
-      if (status === "delivered") {
+      let assign: Awaited<ReturnType<typeof assignStockToOrder>> | null = null;
+      if (status === "confirmed" || status === "delivered") {
         try {
-          const res = await notifyDelivered({ data: { order_id: id } });
-          return res;
+          assign = await assignStockToOrder({ data: { order_id: id } });
         } catch {
-          return { telegram: false as const, reason: "send_failed" as const };
+          assign = null;
         }
       }
-      return null;
+      const { error } = await supabase.from("orders").update({ status }).eq("id", id);
+      if (error) throw error;
+      let notify: { telegram: boolean; reason: string } | null = null;
+      if (status === "delivered") {
+        try {
+          notify = await notifyDelivered({ data: { order_id: id } });
+        } catch {
+          notify = { telegram: false, reason: "send_failed" };
+        }
+      }
+      return { assign, notify };
     },
-    onSuccess: (res) => {
+    onSuccess: ({ assign, notify }) => {
       toast.success("Order status updated");
-      if (res && !res.telegram) {
+      if (assign?.assigned === false) {
+        toast.warning("Stock မရှိပါ — ဤ Plan အတွက် အကောင့်အသစ် ထည့်ပါ။");
+      } else if (assign?.assigned) {
+        toast.success("အကောင့်တစ်ခု အလိုအလျောက် ပေးအပ်ပြီးပါပြီ။");
+      }
+      if (notify && !notify.telegram) {
         toast.warning(
-          res.reason === "no_username"
+          notify.reason === "no_username"
             ? "Telegram username မပါသဖြင့် Telegram အကြောင်းကြားချက် မပို့နိုင်ပါ။"
             : "Telegram အကြောင်းကြားချက် မပို့နိုင်ပါ (customer က Bot ကို Start နှိပ်ထားရန်လိုပါသည်)။",
         );
-      } else if (res?.telegram) {
+      } else if (notify?.telegram) {
         toast.success("Telegram အကြောင်းကြားချက် ပို့ပြီးပါပြီ။");
       }
       qc.invalidateQueries({ queryKey: ["all-orders"] });
+      qc.invalidateQueries({ queryKey: ["stock-accounts"] });
     },
     onError: (e) => toast.error(e instanceof Error ? e.message : "Update failed"),
   });
@@ -148,6 +166,13 @@ function AdminPage() {
       <main className="mx-auto max-w-6xl px-4 py-10">
         <h1 className="text-2xl font-bold text-gradient">{t("admin_title")}</h1>
 
+        <Tabs defaultValue="orders" className="mt-6">
+          <TabsList className="grid w-full grid-cols-2 sm:w-96">
+            <TabsTrigger value="orders">Orders</TabsTrigger>
+            <TabsTrigger value="stock">Stock / Inventory</TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="orders">
         <div className="mt-6 flex flex-col gap-3 sm:flex-row">
           <div className="relative flex-1">
             <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
@@ -224,6 +249,16 @@ function AdminPage() {
                   <div>Telegram — <span className="text-foreground/90">{o.telegram_username || "-"}</span></div>
                   <div>Plan — <span className="text-foreground/90">{plan?.titleMy ?? o.plan_key}</span></div>
                 </dl>
+
+                {o.delivered_username && o.delivered_password && (
+                  <div className="mt-4">
+                    <DeliveredCredentials
+                      username={o.delivered_username}
+                      password={o.delivered_password}
+                      showVideo={false}
+                    />
+                  </div>
+                )}
               </div>
             );
           })}
@@ -236,6 +271,12 @@ function AdminPage() {
             className="mt-6 max-h-96 rounded-xl border border-border"
           />
         )}
+          </TabsContent>
+
+          <TabsContent value="stock" className="mt-6">
+            <AdminInventory />
+          </TabsContent>
+        </Tabs>
       </main>
     </div>
   );

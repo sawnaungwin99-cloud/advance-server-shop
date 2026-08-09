@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Send } from "lucide-react";
 import { Header } from "@/components/Header";
 import { TelegramFab } from "@/components/TelegramFab";
+import { DeliveredCredentials } from "@/components/DeliveredCredentials";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
@@ -83,6 +84,14 @@ function OrdersPage() {
                     <div>Gmail — <span className="text-foreground/90">{o.target_gmail}</span></div>
                     <div>IGN — <span className="text-foreground/90">{o.ign}</span></div>
                   </dl>
+                  {o.delivered_username && o.delivered_password && (
+                    <div className="mt-4">
+                      <DeliveredCredentials
+                        username={o.delivered_username}
+                        password={o.delivered_password}
+                      />
+                    </div>
+                  )}
                   {o.admin_note && <p className="mt-3 text-sm text-gold">{o.admin_note}</p>}
                   <Button asChild variant="outline" size="sm" className="mt-4">
                     <a href={TELEGRAM_URL} target="_blank" rel="noreferrer noopener">
