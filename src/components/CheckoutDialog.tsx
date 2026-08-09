@@ -96,7 +96,7 @@ export function CheckoutDialog({
 
   return (
     <Dialog open={open} onOpenChange={close}>
-      <DialogContent className="max-h-[88vh] overflow-y-auto sm:max-w-lg">
+      <DialogContent className="max-h-[88vh] overflow-y-auto border-white/10 bg-[oklch(0.18_0.02_260/0.92)] backdrop-blur-xl sm:max-w-lg">
         {done ? (
           <div className="space-y-4 py-4 text-center">
             <div className="mx-auto flex size-14 items-center justify-center rounded-full bg-primary/15 glow-cyan">
