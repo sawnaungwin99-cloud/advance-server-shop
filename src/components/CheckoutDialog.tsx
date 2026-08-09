@@ -106,6 +106,19 @@ export function CheckoutDialog({
               <DialogTitle className="text-center text-xl text-gradient">{t("order_done_title")}</DialogTitle>
             </DialogHeader>
             <p className="text-sm text-muted-foreground">{t("order_done_desc")}</p>
+            <div className="space-y-2 text-left">
+              <p className="text-xs font-semibold text-gold">🔑 ဝယ်ထားတဲ့အကောင့် Login ဝင်နည်း</p>
+              <div className="relative w-full overflow-hidden rounded-xl border border-border/70 pt-[56.25%]">
+                <iframe
+                  src={VIDEO_LOGIN_URL}
+                  title="How to Login"
+                  allow="autoplay; fullscreen"
+                  allowFullScreen
+                  loading="lazy"
+                  className="absolute inset-0 size-full"
+                />
+              </div>
+            </div>
             <Button asChild className="w-full glow-cyan">
               <a href={TELEGRAM_URL} target="_blank" rel="noreferrer noopener">
                 <Send className="size-4" /> {t("telegram_cta")}
