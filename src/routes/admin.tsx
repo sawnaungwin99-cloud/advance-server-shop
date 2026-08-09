@@ -166,6 +166,13 @@ function AdminPage() {
       <main className="mx-auto max-w-6xl px-4 py-10">
         <h1 className="text-2xl font-bold text-gradient">{t("admin_title")}</h1>
 
+        <Tabs defaultValue="orders" className="mt-6">
+          <TabsList className="grid w-full grid-cols-2 sm:w-96">
+            <TabsTrigger value="orders">Orders</TabsTrigger>
+            <TabsTrigger value="stock">Stock / Inventory</TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="orders">
         <div className="mt-6 flex flex-col gap-3 sm:flex-row">
           <div className="relative flex-1">
             <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
@@ -242,6 +249,16 @@ function AdminPage() {
                   <div>Telegram — <span className="text-foreground/90">{o.telegram_username || "-"}</span></div>
                   <div>Plan — <span className="text-foreground/90">{plan?.titleMy ?? o.plan_key}</span></div>
                 </dl>
+
+                {o.delivered_username && o.delivered_password && (
+                  <div className="mt-4">
+                    <DeliveredCredentials
+                      username={o.delivered_username}
+                      password={o.delivered_password}
+                      showVideo={false}
+                    />
+                  </div>
+                )}
               </div>
             );
           })}
@@ -254,6 +271,12 @@ function AdminPage() {
             className="mt-6 max-h-96 rounded-xl border border-border"
           />
         )}
+          </TabsContent>
+
+          <TabsContent value="stock" className="mt-6">
+            <AdminInventory />
+          </TabsContent>
+        </Tabs>
       </main>
     </div>
   );
