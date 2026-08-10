@@ -22,25 +22,41 @@ export function PlanCard({
 }) {
   const { t } = useLang();
   const [open, setOpen] = useState(false);
+  const [tipOpen, setTipOpen] = useState(false);
 
   return (
     <>
       <div
-        className={`metal-card relative flex flex-col rounded-2xl p-6 transition-transform duration-300 hover:-translate-y-1 ${
+        className={`metal-card relative flex flex-col rounded-2xl p-6 pt-8 transition-transform duration-300 hover:-translate-y-1 ${
           plan.popular ? "glow-gold" : ""
         }`}
       >
         {plan.popular && (
-          <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-gold px-3 py-1 text-[11px] font-bold text-gold-foreground">
+          <span className="absolute -top-3 left-3 max-w-[45%] truncate rounded-full bg-gold px-3 py-1 text-[11px] font-bold text-gold-foreground shadow-lg">
             {t("popular")}
           </span>
         )}
 
-        <span className="absolute -top-3 right-3 rounded-full border border-gold/40 bg-background/90 px-2.5 py-1 text-[11px] font-semibold text-gold shadow-lg backdrop-blur">
-          🔥 {sold} ခု ရောင်းရပြီး
-        </span>
+        <TooltipProvider delayDuration={150}>
+          <Tooltip open={tipOpen} onOpenChange={setTipOpen}>
+            <TooltipTrigger asChild>
+              <button
+                type="button"
+                onClick={() => setTipOpen((v) => !v)}
+                className="absolute -top-3 right-3 max-w-[52%] truncate rounded-full border border-gold/40 bg-background/90 px-2.5 py-1 text-[11px] font-semibold text-gold shadow-lg backdrop-blur"
+              >
+                🔥 {sold} ခု ရောင်းရပြီး
+              </button>
+            </TooltipTrigger>
+            <TooltipContent side="bottom" className="max-w-[260px] text-center leading-relaxed">
+              ဤအရေအတွက်သည် စနစ်အတွင်း အောင်မြင်စွာ ပြီးစီးခဲ့သော (Completed) စုစုပေါင်း
+              အရောင်းမှတ်တမ်း ဖြစ်ပါသည်။
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
 
         <p className="brand-title mt-2 text-xs text-muted-foreground">{plan.nameEn}</p>
+
 
         <p className="mt-2 text-3xl font-bold text-gradient">{plan.priceLabel}</p>
         <p className="text-sm text-muted-foreground">{plan.titleMy}</p>
