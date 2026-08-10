@@ -1,5 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useEffect } from "react";
+import { toast } from "sonner";
 import { Send } from "lucide-react";
 import { Header } from "@/components/Header";
 import { TelegramFab } from "@/components/TelegramFab";
@@ -32,6 +34,7 @@ export const STATUS_KEYS = {
 function OrdersPage() {
   const { t } = useLang();
   const { user, loading } = useAuth();
+  const qc = useQueryClient();
 
   const { data: orders } = useQuery({
     queryKey: ["my-orders", user?.id],
@@ -45,6 +48,36 @@ function OrdersPage() {
       return data;
     },
   });
+
+  useEffect(() => {
+    if (!user) return;
+    const channel = supabase
+      .channel("my-orders-realtime")
+      .on(
+        "postgres_changes",
+        { event: "UPDATE", schema: "public", table: "orders", filter: `user_id=eq.${user.id}` },
+        (payload) => {
+          const next = payload.new as { status?: string };
+          const prev = payload.old as { status?: string };
+          qc.invalidateQueries({ queryKey: ["my-orders", user.id] });
+          if (next.status === "completed" && prev.status !== "completed") {
+            toast.success("သင့်အော်ဒါ အောင်မြင်စွာ ပြီးစီးပါပြီ!", {
+              duration: 5000,
+              closeButton: true,
+              className:
+                "border-emerald-500/50 bg-emerald-500/15 text-emerald-100 animate-in fade-in slide-in-from-top-4",
+            });
+          }
+        },
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [user, qc]);
+
+
 
   return (
     <div className="min-h-screen">
