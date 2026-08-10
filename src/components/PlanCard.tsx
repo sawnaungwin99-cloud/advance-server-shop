@@ -5,7 +5,15 @@ import { Check, Clock, Info, TriangleAlert } from "lucide-react";
 import { type Plan } from "@/lib/plans";
 import { useLang } from "@/lib/i18n";
 
-export function PlanCard({ plan, onBuy }: { plan: Plan; onBuy: (plan: Plan) => void }) {
+export function PlanCard({
+  plan,
+  onBuy,
+  sold = 0,
+}: {
+  plan: Plan;
+  onBuy: (plan: Plan) => void;
+  sold?: number;
+}) {
   const { t } = useLang();
   const [open, setOpen] = useState(false);
 
@@ -22,7 +30,12 @@ export function PlanCard({ plan, onBuy }: { plan: Plan; onBuy: (plan: Plan) => v
           </span>
         )}
 
-        <p className="brand-title text-xs text-muted-foreground">{plan.nameEn}</p>
+        <span className="absolute -top-3 right-3 rounded-full border border-gold/40 bg-background/90 px-2.5 py-1 text-[11px] font-semibold text-gold shadow-lg backdrop-blur">
+          🔥 {sold} ခု ရောင်းရပြီး
+        </span>
+
+        <p className="brand-title mt-2 text-xs text-muted-foreground">{plan.nameEn}</p>
+
         <p className="mt-2 text-3xl font-bold text-gradient">{plan.priceLabel}</p>
         <p className="text-sm text-muted-foreground">{plan.titleMy}</p>
 

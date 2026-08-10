@@ -1,7 +1,6 @@
 import { Check, Copy } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
-import { VIDEO_LOGIN_URL } from "@/lib/videos";
 
 function CopyRow({ label, value }: { label: string; value: string }) {
   const [copied, setCopied] = useState(false);
@@ -21,6 +20,7 @@ function CopyRow({ label, value }: { label: string; value: string }) {
         type="button"
         onClick={copy}
         className="shrink-0 rounded-lg bg-primary/15 px-3 py-1.5 text-xs font-semibold text-primary transition hover:bg-primary/25"
+        aria-label={`Copy ${label}`}
       >
         <span className="inline-flex items-center gap-1">
           {copied ? <Check className="size-3.5" /> : <Copy className="size-3.5" />} ကူးယူမည်
@@ -33,32 +33,15 @@ function CopyRow({ label, value }: { label: string; value: string }) {
 export function DeliveredCredentials({
   username,
   password,
-  showVideo = true,
 }: {
   username: string;
   password: string;
-  showVideo?: boolean;
 }) {
   return (
     <div className="space-y-3 rounded-2xl border border-primary/30 bg-primary/5 p-4">
       <p className="text-sm font-semibold text-gold">🔑 သင့်အကောင့် အချက်အလက်</p>
-      <CopyRow label="Username / Email" value={username} />
-      <CopyRow label="Password" value={password} />
-      {showVideo && (
-        <div className="space-y-2">
-          <p className="text-xs text-muted-foreground">Login ဝင်နည်း ဗီဒီယို</p>
-          <div className="relative w-full overflow-hidden rounded-xl border border-border/70 pt-[56.25%]">
-            <iframe
-              src={VIDEO_LOGIN_URL}
-              title="How to Login"
-              allow="autoplay; fullscreen"
-              allowFullScreen
-              loading="lazy"
-              className="absolute inset-0 size-full"
-            />
-          </div>
-        </div>
-      )}
+      <CopyRow label="Moonton Gmail" value={username} />
+      <CopyRow label="Moonton Password" value={password} />
     </div>
   );
 }

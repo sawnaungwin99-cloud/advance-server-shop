@@ -40,8 +40,9 @@ export const Route = createFileRoute("/admin")({
 
 const STATUSES = [
   { value: "pending", label: "Pending / စောင့်ဆိုင်းဆဲ" },
-  { value: "confirmed", label: "Confirmed / အတည်ပြုပြီး" },
-  { value: "delivered", label: "Delivered / ပြီးစီးပါပြီ" },
+  { value: "processing", label: "Processing / ဆောင်ရွက်နေပြီ" },
+  { value: "completed", label: "Completed / ပြီးစီးပြီ" },
+  { value: "rejected", label: "Rejected / ငြင်းပယ်သည်" },
 ] as const;
 
 const statusLabel = (s: string) => STATUSES.find((x) => x.value === s)?.label ?? s;
@@ -81,7 +82,7 @@ function AdminPage() {
   const update = useMutation({
     mutationFn: async ({ id, status }: { id: string; status: string }) => {
       let assign: Awaited<ReturnType<typeof assignStockToOrder>> | null = null;
-      if (status === "confirmed" || status === "delivered") {
+      if (status === "completed") {
         try {
           assign = await assignStockToOrder({ data: { order_id: id } });
         } catch {
@@ -91,7 +92,7 @@ function AdminPage() {
       const { error } = await supabase.from("orders").update({ status }).eq("id", id);
       if (error) throw error;
       let notify: { telegram: boolean; reason: string } | null = null;
-      if (status === "delivered") {
+      if (status === "completed") {
         try {
           notify = await notifyDelivered({ data: { order_id: id } });
         } catch {
@@ -255,7 +256,6 @@ function AdminPage() {
                     <DeliveredCredentials
                       username={o.delivered_username}
                       password={o.delivered_password}
-                      showVideo={false}
                     />
                   </div>
                 )}

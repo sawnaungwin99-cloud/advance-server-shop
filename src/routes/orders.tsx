@@ -66,7 +66,10 @@ function OrdersPage() {
             {orders?.length === 0 && <p className="text-sm text-muted-foreground">{t("orders_empty")}</p>}
             {orders?.map((o) => {
               const plan = PLANS.find((p) => p.key === o.plan_key);
-              const statusKey = STATUS_KEYS[o.status as keyof typeof STATUS_KEYS] ?? "st_pending";
+              const effective =
+                o.delivered_username && o.delivered_password ? "completed" : o.status;
+              const statusKey = STATUS_KEYS[effective as keyof typeof STATUS_KEYS] ?? "st_pending";
+
               return (
                 <div key={o.id} className="metal-card rounded-2xl p-5">
                   <div className="flex flex-wrap items-center justify-between gap-2">
