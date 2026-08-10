@@ -163,6 +163,13 @@ export type Database = {
         }
         Returns: boolean
       }
+      plan_sales_counts: {
+        Args: never
+        Returns: {
+          plan_key: string
+          sold: number
+        }[]
+      }
     }
     Enums: {
       app_role: "admin" | "user"
