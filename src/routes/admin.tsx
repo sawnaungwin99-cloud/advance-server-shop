@@ -203,17 +203,18 @@ function AdminPage() {
 
           <TabsContent value="orders">
         <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+        <div className="mt-6 flex flex-col gap-3 lg:flex-row">
           <div className="relative flex-1">
             <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
             <Input
               className="pl-9"
-              placeholder="Order No. / Phone / Game ID ဖြင့် ရှာပါ"
+              placeholder="Order No. / Phone / Name / Game ID ဖြင့် ရှာပါ"
               value={q}
               onChange={(e) => setQ(e.target.value)}
             />
           </div>
           <Select value={statusFilter} onValueChange={setStatusFilter}>
-            <SelectTrigger className="w-full sm:w-56">
+            <SelectTrigger className="w-full lg:w-56">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -225,13 +226,40 @@ function AdminPage() {
               ))}
             </SelectContent>
           </Select>
+          <Select value={planFilter} onValueChange={setPlanFilter}>
+            <SelectTrigger className="w-full lg:w-56">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All plans</SelectItem>
+              {PLANS.map((p) => (
+                <SelectItem key={p.key} value={p.key}>
+                  {p.priceLabel}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          <Button
+            variant="outline"
+            disabled={!hasFilters}
+            onClick={() => {
+              setQ("");
+              setStatusFilter("all");
+              setPlanFilter("all");
+            }}
+          >
+            <RotateCcw className="size-4" /> Clear Filters
+          </Button>
         </div>
 
         <div className="mt-6 space-y-4">
           {filtered.length === 0 && (
-            <p className="text-sm text-muted-foreground">{t("orders_empty")}</p>
+            <p className="text-sm text-muted-foreground">
+              {hasFilters ? "No orders found matching your search" : t("orders_empty")}
+            </p>
           )}
           {filtered.map((o) => {
+
             const plan = PLANS.find((p) => p.key === o.plan_key);
             return (
               <div key={o.id} className="metal-card rounded-2xl p-5">
