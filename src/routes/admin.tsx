@@ -315,7 +315,47 @@ function AdminPage() {
                     />
                   </div>
                 )}
+
+                <div className="mt-4 rounded-xl border border-border/60 bg-secondary/30 p-3">
+                  <p className="flex items-center gap-2 text-xs font-semibold text-primary">
+                    <History className="size-4" /> Audit Log / History
+                  </p>
+                  {(logsByOrder[o.id] ?? []).length === 0 ? (
+                    <p className="mt-2 text-xs text-muted-foreground">
+                      No status changes recorded yet.
+                    </p>
+                  ) : (
+                    <ul className="mt-3 space-y-2">
+                      {(logsByOrder[o.id] ?? []).map((log) => (
+                        <li key={log.id} className="flex flex-wrap items-center gap-2 text-xs">
+                          <span className="rounded-full border border-border bg-background/60 px-2 py-0.5 text-muted-foreground">
+                            {statusLabel(log.previous_status ?? "—")}
+                          </span>
+                          <span className="text-muted-foreground">➔</span>
+                          <span
+                            className={`rounded-full px-2 py-0.5 font-semibold ${
+                              log.new_status === "completed"
+                                ? "bg-emerald-500/15 text-emerald-400"
+                                : log.new_status === "rejected"
+                                  ? "bg-destructive/15 text-destructive"
+                                  : log.new_status === "processing"
+                                    ? "bg-primary/15 text-primary"
+                                    : "bg-gold/15 text-gold"
+                            }`}
+                          >
+                            {statusLabel(log.new_status)}
+                          </span>
+                          <span className="text-muted-foreground">
+                            · {log.changed_by_email ?? log.changed_by ?? "system"} ·{" "}
+                            {new Date(log.created_at).toLocaleString()}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
               </div>
+
             );
           })}
         </div>
