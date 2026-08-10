@@ -54,6 +54,7 @@ function AdminPage() {
   const [receiptUrl, setReceiptUrl] = useState<string | null>(null);
   const [q, setQ] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
+  const [planFilter, setPlanFilter] = useState("all");
 
   const { data: orders } = useQuery({
     queryKey: ["all-orders"],
@@ -68,16 +69,42 @@ function AdminPage() {
     },
   });
 
+  const { data: auditLogs } = useQuery({
+    queryKey: ["order-audit-logs"],
+    enabled: isAdmin,
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("order_audit_logs")
+        .select("*")
+        .order("created_at", { ascending: false })
+        .limit(500);
+      if (error) throw error;
+      return data;
+    },
+  });
+
+  const logsByOrder = useMemo(() => {
+    const map: Record<string, NonNullable<typeof auditLogs>> = {};
+    for (const log of auditLogs ?? []) {
+      (map[log.order_id] ??= []).push(log);
+    }
+    return map;
+  }, [auditLogs]);
+
+  const hasFilters = q.trim() !== "" || statusFilter !== "all" || planFilter !== "all";
+
   const filtered = useMemo(() => {
     const term = q.trim().toLowerCase();
     return (orders ?? []).filter((o) => {
       if (statusFilter !== "all" && o.status !== statusFilter) return false;
+      if (planFilter !== "all" && o.plan_key !== planFilter) return false;
       if (!term) return true;
       return [o.id, o.phone, o.ign, o.full_name, o.target_gmail, o.telegram_username]
         .filter(Boolean)
         .some((v) => String(v).toLowerCase().includes(term));
     });
-  }, [orders, q, statusFilter]);
+  }, [orders, q, statusFilter, planFilter]);
+
 
   const update = useMutation({
     mutationFn: async ({ id, status }: { id: string; status: string }) => {
