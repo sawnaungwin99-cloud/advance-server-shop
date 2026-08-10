@@ -1,14 +1,14 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
 import { ShieldCheck, Sparkles, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Header } from "@/components/Header";
 import { PlanCard } from "@/components/PlanCard";
 import { CheckoutDialog } from "@/components/CheckoutDialog";
 import { TelegramFab } from "@/components/TelegramFab";
-import { PaymentAccounts } from "@/components/PaymentAccounts";
 import { WelcomeNotice } from "@/components/WelcomeNotice";
-import { VideoTutorials } from "@/components/VideoTutorials";
 
 import { useLang } from "@/lib/i18n";
 import { PLANS, type Plan } from "@/lib/plans";
@@ -36,6 +36,17 @@ function Home() {
   const { t } = useLang();
   const [plan, setPlan] = useState<Plan | null>(null);
   const [open, setOpen] = useState(false);
+
+  const { data: salesByPlan } = useQuery({
+    queryKey: ["plan-sales-counts"],
+    queryFn: async () => {
+      const { data, error } = await supabase.rpc("plan_sales_counts");
+      if (error) throw error;
+      const map: Record<string, number> = {};
+      for (const row of data ?? []) map[row.plan_key] = Number(row.sold);
+      return map;
+    },
+  });
 
   const onBuy = (p: Plan) => {
     setPlan(p);
@@ -85,19 +96,11 @@ function Home() {
 
           <div className="grid gap-6 md:grid-cols-3">
             {PLANS.map((p) => (
-              <PlanCard key={p.key} plan={p} onBuy={onBuy} />
+              <PlanCard key={p.key} plan={p} onBuy={onBuy} sold={salesByPlan?.[p.key] ?? 0} />
             ))}
           </div>
 
-          <div className="mt-12">
-            <h3 className="mb-3 text-center text-lg font-semibold text-gold">{t("pay_title")}</h3>
-            <div className="mx-auto max-w-2xl">
-              <PaymentAccounts />
-            </div>
-          </div>
         </section>
-
-        <VideoTutorials />
       </main>
 
       <footer className="border-t border-border/70 px-4 py-8 text-center text-xs text-muted-foreground">

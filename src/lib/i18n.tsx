@@ -67,9 +67,9 @@ export const dict: Dict = {
   orders_empty: { my: "အော်ဒါ မရှိသေးပါ။", en: "No orders yet." },
   status: { my: "အခြေအနေ", en: "Status" },
   st_pending: { my: "စောင့်ဆိုင်းဆဲ", en: "Pending" },
-  st_processing: { my: "ဆောင်ရွက်နေဆဲ", en: "Processing" },
-  st_completed: { my: "ပြီးစီးပြီး", en: "Completed" },
-  st_rejected: { my: "ငြင်းပယ်ထားသည်", en: "Rejected" },
+  st_processing: { my: "ဆောင်ရွက်နေပြီ", en: "Processing" },
+  st_completed: { my: "ပြီးစီးပြီ", en: "Completed" },
+  st_rejected: { my: "ငြင်းပယ်သည်", en: "Rejected" },
 
   admin_title: { my: "အက်ဒမင် ဒက်ရှ်ဘုတ်", en: "Admin Dashboard" },
   admin_denied: { my: "သင့်တွင် အက်ဒမင်ခွင့်ပြုချက် မရှိပါ။", en: "You do not have admin access." },

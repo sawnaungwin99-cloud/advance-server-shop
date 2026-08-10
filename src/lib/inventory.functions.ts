@@ -50,7 +50,11 @@ export const assignStockToOrder = createServerFn({ method: "POST" })
 
     const { error: upErr } = await context.supabase
       .from("orders")
-      .update({ delivered_username: stock.username, delivered_password: stock.password })
+      .update({
+        delivered_username: stock.username,
+        delivered_password: stock.password,
+        status: "completed",
+      })
       .eq("id", order.id);
     if (upErr) throw upErr;
 
