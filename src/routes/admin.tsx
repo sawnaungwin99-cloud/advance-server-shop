@@ -145,6 +145,7 @@ function AdminPage() {
         toast.success("Telegram အကြောင်းကြားချက် ပို့ပြီးပါပြီ။");
       }
       qc.invalidateQueries({ queryKey: ["all-orders"] });
+      qc.invalidateQueries({ queryKey: ["order-audit-logs"] });
       qc.invalidateQueries({ queryKey: ["stock-accounts"] });
     },
     onError: (e) => toast.error(e instanceof Error ? e.message : "Update failed"),
