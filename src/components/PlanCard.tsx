@@ -1,6 +1,12 @@
 import { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { Check, Clock, Info, TriangleAlert } from "lucide-react";
 import { type Plan } from "@/lib/plans";
 import { useLang } from "@/lib/i18n";
