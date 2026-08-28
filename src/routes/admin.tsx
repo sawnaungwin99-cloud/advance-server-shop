@@ -110,14 +110,17 @@ function AdminPage() {
     mutationFn: async ({ id, status }: { id: string; status: string }) => {
       let assign: Awaited<ReturnType<typeof assignStockToOrder>> | null = null;
       if (status === "completed") {
-        try {
-          assign = await assignStockToOrder({ data: { order_id: id } });
-        } catch {
-          assign = null;
-        }
-      }
-      const { error } = await supabase.from("orders").update({ status }).eq("id", id);
-      if (error) throw error;
+          try {
+              assign = await assignStockToOrder({ data: { order_id: id } });
+                } catch {
+                    assign = null;
+                      }
+
+                        // Stock မရှိပါက Order Status ကို Update မလုပ်ဘဲ ဒီမှာတင် ရပ်လိုက်မည်
+                          if (!assign?.assigned) {
+                              return { assign, notify: null };
+                                }
+                                }
       let notify: { telegram: boolean; reason: string } | null = null;
       if (status === "completed") {
         try {
