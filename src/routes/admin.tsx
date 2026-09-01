@@ -134,11 +134,10 @@ function AdminPage() {
     onSuccess: ({ assign, notify }) => {
       toast.success("Order status updated");
 
-      if (assign?.assigned === false) {
-        toast.warning("Stock မရှိပါ — ဤ Plan အတွက် အကောင့်အသစ် ထည့်ပါ။");
-      } else if (assign?.assigned) {
+      if (assign?.assigned) {
         toast.success("အကောင့်တစ်ခု အလိုအလျောက် ပေးအပ်ပြီးပါပြီ။");
       }
+
       if (notify && !notify.telegram) {
         toast.warning(
           notify.reason === "no_username"
