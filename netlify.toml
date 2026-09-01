@@ -1,0 +1,29 @@
+# SNW Advance Server Shop — Netlify deployment
+#
+# IMPORTANT: this app is NOT a static site. Telegram notifications, stock
+# assignment and order completion all run through TanStack Start *server
+# functions*. A plain static deploy has no server runtime, so those calls
+# fail silently in the browser.
+#
+# NITRO_PRESET=netlify makes the build emit a Netlify server handler instead
+# of the default Cloudflare Worker output.
+#
+# Required Netlify environment variables (Site settings -> Environment):
+#   SUPABASE_URL
+#   SUPABASE_PUBLISHABLE_KEY
+#   SUPABASE_SERVICE_ROLE_KEY
+#   TELEGRAM_BOT_TOKEN
+#   VITE_SUPABASE_URL
+#   VITE_SUPABASE_PUBLISHABLE_KEY
+#   VITE_SUPABASE_PROJECT_ID
+#
+# Never prefix TELEGRAM_BOT_TOKEN or the service role key with VITE_ —
+# VITE_ variables are bundled into the public JavaScript.
+
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NITRO_PRESET = "netlify"
+  NODE_VERSION = "20"

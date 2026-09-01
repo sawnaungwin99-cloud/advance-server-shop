@@ -109,35 +109,35 @@ function AdminPage() {
   const update = useMutation({
     mutationFn: async ({ id, status }: { id: string; status: string }) => {
       let assign: Awaited<ReturnType<typeof assignStockToOrder>> | null = null;
-      if (status === "completed") {
-          try {
-              assign = await assignStockToOrder({ data: { order_id: id } });
-                } catch {
-                    assign = null;
-                      }
-
-                        // Stock မရှိပါက Order Status ကို Update မလုပ်ဘဲ ဒီမှာတင် ရပ်လိုက်မည်
-                          if (!assign?.assigned) {
-                              return { assign, notify: null };
-                                }
-                                }
       let notify: { telegram: boolean; reason: string } | null = null;
+
       if (status === "completed") {
+        // Server function assigns stock AND flips the order to "completed".
+        // Do NOT swallow the error: if it fails the status must not look updated.
+        assign = await assignStockToOrder({ data: { order_id: id } });
+        if (!assign.assigned) {
+          throw new Error("Stock မရှိပါ — ဤ Plan အတွက် အကောင့်အသစ် ထည့်ပါ။");
+        }
         try {
           notify = await notifyDelivered({ data: { order_id: id } });
         } catch {
           notify = { telegram: false, reason: "send_failed" };
         }
+      } else {
+        // Every other status is a plain admin update through RLS.
+        const { error } = await supabase.from("orders").update({ status }).eq("id", id);
+        if (error) throw error;
       }
+
       return { assign, notify };
     },
     onSuccess: ({ assign, notify }) => {
       toast.success("Order status updated");
-      if (assign?.assigned === false) {
-        toast.warning("Stock မရှိပါ — ဤ Plan အတွက် အကောင့်အသစ် ထည့်ပါ။");
-      } else if (assign?.assigned) {
+
+      if (assign?.assigned) {
         toast.success("အကောင့်တစ်ခု အလိုအလျောက် ပေးအပ်ပြီးပါပြီ။");
       }
+
       if (notify && !notify.telegram) {
         toast.warning(
           notify.reason === "no_username"
