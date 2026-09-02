@@ -1,5 +1,6 @@
-import { useState } from "react";
-import { Send, Ticket, Upload } from "lucide-react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "@tanstack/react-router";
+import { Send, Upload } from "lucide-react";
 import { toast } from "sonner";
 import { z } from "zod";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
@@ -13,6 +14,28 @@ import { notifyOrder } from "@/lib/telegram.functions";
 import { useLang } from "@/lib/i18n";
 import { TELEGRAM_URL, type Plan } from "@/lib/plans";
 import { SELF_REFERRAL_ERROR, discountForPrice, mmk } from "@/lib/referral";
+
+const PENDING_CHECKOUT_KEY = "snw-pending-checkout";
+
+type PendingCheckout = {
+  planKey: string;
+  form: { full_name: string; phone: string; target_gmail: string; ign: string; telegram_username: string };
+  promo: string;
+};
+
+function loadPendingCheckout(): PendingCheckout | null {
+  try {
+    const raw = sessionStorage.getItem(PENDING_CHECKOUT_KEY);
+    if (!raw) return null;
+    return JSON.parse(raw) as PendingCheckout;
+  } catch {
+    return null;
+  }
+}
+
+function clearPendingCheckout() {
+  sessionStorage.removeItem(PENDING_CHECKOUT_KEY);
+}
 
 const schema = z.object({
   full_name: z.string().trim().min(2).max(100),
@@ -33,6 +56,7 @@ export function CheckoutDialog({
 }) {
   const { t } = useLang();
   const { user } = useAuth();
+  const navigate = useNavigate();
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState(false);
   const [file, setFile] = useState<File | null>(null);
@@ -40,6 +64,18 @@ export function CheckoutDialog({
   const [promo, setPromo] = useState("");
   const [checking, setChecking] = useState(false);
   const [applied, setApplied] = useState<{ code: string; referrer_id: string; discount: number } | null>(null);
+
+  useEffect(() => {
+    if (user && open) {
+      const pending = loadPendingCheckout();
+      if (pending) {
+        setForm(pending.form);
+        setPromo(pending.promo);
+        clearPendingCheckout();
+        toast.info("Login ဝင်ပြီးပါပြီ။ ဝယ်ယူမှု ဆက်လုပ်နိုင်ပါပြီ။");
+      }
+    }
+  }, [user, open]);
 
   const discount = applied?.discount ?? 0;
   const finalPrice = Math.max(0, (plan?.price ?? 0) - discount);
@@ -88,6 +124,15 @@ export function CheckoutDialog({
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!plan) return;
+    if (!user) {
+      sessionStorage.setItem(
+        PENDING_CHECKOUT_KEY,
+        JSON.stringify({ planKey: plan.key, form, promo } satisfies PendingCheckout),
+      );
+      toast.error(t("auth_required_toast"));
+      navigate({ to: "/auth" });
+      return;
+    }
     const parsed = schema.safeParse(form);
     if (!parsed.success) {
       toast.error(parsed.error.issues[0]?.message ?? "Invalid input");

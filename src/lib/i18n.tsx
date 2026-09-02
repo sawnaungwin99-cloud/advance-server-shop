@@ -80,6 +80,9 @@ export const dict: Dict = {
   email: { my: "အီးမေးလ်", en: "Email" },
   password: { my: "စကားဝှက်", en: "Password" },
   display_name: { my: "အမည်", en: "Name" },
+  google_login: { my: "Google အကောင့်ဖြင့် Login ဝင်ရန်", en: "Continue with Google" },
+  auth_required_toast: { my: "အော်ဒါတင်ရန် အကောင့်ပြုလုပ်၍ Login ဝင်ပေးပါ", en: "Please sign in or create an account to submit your order" },
+  or_continue_with: { my: "သို့မဟုတ်", en: "or" },
 };
 
 type Ctx = { lang: Lang; setLang: (l: Lang) => void; t: (k: keyof typeof dict) => string };

@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { ShieldCheck, Sparkles, Zap } from "lucide-react";
@@ -11,6 +11,7 @@ import { TelegramFab } from "@/components/TelegramFab";
 
 import { useLang } from "@/lib/i18n";
 import { PLANS, type Plan } from "@/lib/plans";
+import { useAuth } from "@/hooks/useAuth";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -33,6 +34,7 @@ export const Route = createFileRoute("/")({
 
 function Home() {
   const { t } = useLang();
+  const { user } = useAuth();
   const [plan, setPlan] = useState<Plan | null>(null);
   const [open, setOpen] = useState(false);
 
@@ -51,6 +53,24 @@ function Home() {
     setPlan(p);
     setOpen(true);
   };
+
+  useEffect(() => {
+    if (user) {
+      try {
+        const raw = sessionStorage.getItem("snw-pending-checkout");
+        if (raw) {
+          const pending = JSON.parse(raw) as { planKey: string };
+          const pendingPlan = PLANS.find((p) => p.key === pending.planKey);
+          if (pendingPlan) {
+            setPlan(pendingPlan);
+            setOpen(true);
+          }
+        }
+      } catch {
+        // ignore malformed session data
+      }
+    }
+  }, [user]);
 
   return (
     <div className="min-h-screen">
