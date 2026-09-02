@@ -8,7 +8,6 @@ import { Header } from "@/components/Header";
 import { PlanCard } from "@/components/PlanCard";
 import { CheckoutDialog } from "@/components/CheckoutDialog";
 import { TelegramFab } from "@/components/TelegramFab";
-import { WelcomeNotice } from "@/components/WelcomeNotice";
 
 import { useLang } from "@/lib/i18n";
 import { PLANS, type Plan } from "@/lib/plans";
@@ -111,7 +110,6 @@ function Home() {
         </Link>
       </footer>
 
-      <WelcomeNotice />
       <CheckoutDialog plan={plan} open={open} onOpenChange={setOpen} />
       <TelegramFab />
 
