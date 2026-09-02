@@ -107,7 +107,10 @@ export function CheckoutDialog({
       const { error } = await supabase.from("orders").insert({
         user_id: user?.id ?? null,
         plan_key: plan.key,
-        price_mmk: plan.price,
+        price_mmk: finalPrice,
+        discount_mmk: discount,
+        referral_code: applied?.code ?? null,
+        referrer_id: applied?.referrer_id ?? null,
         receipt_path: path,
         ...parsed.data,
       });
@@ -117,7 +120,9 @@ export function CheckoutDialog({
         await notifyOrder({
           data: {
             ...parsed.data,
-            plan_label: plan.priceLabel,
+            plan_label: applied
+              ? `${plan.priceLabel} · Promo ${applied.code} · ${mmk(finalPrice)}`.slice(0, 80)
+              : plan.priceLabel,
             receipt_path: path,
           },
         });
