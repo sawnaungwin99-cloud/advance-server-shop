@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Send, Upload } from "lucide-react";
+import { Send, Ticket, Upload } from "lucide-react";
 import { toast } from "sonner";
 import { z } from "zod";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
@@ -12,6 +12,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { notifyOrder } from "@/lib/telegram.functions";
 import { useLang } from "@/lib/i18n";
 import { TELEGRAM_URL, type Plan } from "@/lib/plans";
+import { SELF_REFERRAL_ERROR, discountForPrice, mmk } from "@/lib/referral";
 
 const schema = z.object({
   full_name: z.string().trim().min(2).max(100),
@@ -36,15 +37,53 @@ export function CheckoutDialog({
   const [done, setDone] = useState(false);
   const [file, setFile] = useState<File | null>(null);
   const [form, setForm] = useState({ full_name: "", phone: "", target_gmail: "", ign: "", telegram_username: "" });
+  const [promo, setPromo] = useState("");
+  const [checking, setChecking] = useState(false);
+  const [applied, setApplied] = useState<{ code: string; referrer_id: string; discount: number } | null>(null);
+
+  const discount = applied?.discount ?? 0;
+  const finalPrice = Math.max(0, (plan?.price ?? 0) - discount);
 
   const close = (v: boolean) => {
     onOpenChange(v);
     if (!v) {
       setDone(false);
       setFile(null);
+      setPromo("");
+      setApplied(null);
       setForm({ full_name: "", phone: "", target_gmail: "", ign: "", telegram_username: "" });
     }
   };
+
+  const applyPromo = async () => {
+    if (!plan) return;
+    const code = promo.trim();
+    if (!code) return;
+    setChecking(true);
+    try {
+      const { data, error } = await supabase.rpc("referral_lookup", { _code: code });
+      if (error) throw error;
+      if (!data) {
+        setApplied(null);
+        toast.error("Promo Code မမှန်ကန်ပါ");
+        return;
+      }
+      if (user?.id && data === user.id) {
+        setApplied(null);
+        toast.error(SELF_REFERRAL_ERROR);
+        return;
+      }
+      const d = discountForPrice(plan.price);
+      setApplied({ code, referrer_id: data as string, discount: d });
+      toast.success(`Promo Code အောင်မြင်ပါသည် — ${mmk(d)} လျှော့ပေးပါမည်။`);
+    } catch (err) {
+      setApplied(null);
+      toast.error(err instanceof Error ? err.message : "Promo Code စစ်ဆေး၍ မရပါ");
+    } finally {
+      setChecking(false);
+    }
+  };
+
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -68,7 +107,10 @@ export function CheckoutDialog({
       const { error } = await supabase.from("orders").insert({
         user_id: user?.id ?? null,
         plan_key: plan.key,
-        price_mmk: plan.price,
+        price_mmk: finalPrice,
+        discount_mmk: discount,
+        referral_code: applied?.code ?? null,
+        referrer_id: applied?.referrer_id ?? null,
         receipt_path: path,
         ...parsed.data,
       });
@@ -78,7 +120,9 @@ export function CheckoutDialog({
         await notifyOrder({
           data: {
             ...parsed.data,
-            plan_label: plan.priceLabel,
+            plan_label: applied
+              ? `${plan.priceLabel} · Promo ${applied.code} · ${mmk(finalPrice)}`.slice(0, 80)
+              : plan.priceLabel,
             receipt_path: path,
           },
         });

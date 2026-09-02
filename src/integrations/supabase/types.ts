@@ -58,6 +58,7 @@ export type Database = {
           created_at: string
           delivered_password: string | null
           delivered_username: string | null
+          discount_mmk: number
           full_name: string
           id: string
           ign: string
@@ -66,6 +67,8 @@ export type Database = {
           plan_key: string
           price_mmk: number
           receipt_path: string | null
+          referral_code: string | null
+          referrer_id: string | null
           status: string
           target_gmail: string
           telegram_username: string | null
@@ -77,6 +80,7 @@ export type Database = {
           created_at?: string
           delivered_password?: string | null
           delivered_username?: string | null
+          discount_mmk?: number
           full_name: string
           id?: string
           ign: string
@@ -85,6 +89,8 @@ export type Database = {
           plan_key: string
           price_mmk: number
           receipt_path?: string | null
+          referral_code?: string | null
+          referrer_id?: string | null
           status?: string
           target_gmail: string
           telegram_username?: string | null
@@ -96,6 +102,7 @@ export type Database = {
           created_at?: string
           delivered_password?: string | null
           delivered_username?: string | null
+          discount_mmk?: number
           full_name?: string
           id?: string
           ign?: string
@@ -104,6 +111,8 @@ export type Database = {
           plan_key?: string
           price_mmk?: number
           receipt_path?: string | null
+          referral_code?: string | null
+          referrer_id?: string | null
           status?: string
           target_gmail?: string
           telegram_username?: string | null
@@ -117,16 +126,61 @@ export type Database = {
           created_at: string
           display_name: string | null
           id: string
+          promo_code: string
         }
         Insert: {
           created_at?: string
           display_name?: string | null
           id: string
+          promo_code?: string
         }
         Update: {
           created_at?: string
           display_name?: string | null
           id?: string
+          promo_code?: string
+        }
+        Relationships: []
+      }
+      referral_claims: {
+        Row: {
+          admin_note: string | null
+          contact_email: string | null
+          created_at: string
+          full_name: string | null
+          id: string
+          points_at_claim: number
+          promo_code: string
+          status: string
+          telegram_username: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          admin_note?: string | null
+          contact_email?: string | null
+          created_at?: string
+          full_name?: string | null
+          id?: string
+          points_at_claim?: number
+          promo_code: string
+          status?: string
+          telegram_username?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          admin_note?: string | null
+          contact_email?: string | null
+          created_at?: string
+          full_name?: string | null
+          id?: string
+          points_at_claim?: number
+          promo_code?: string
+          status?: string
+          telegram_username?: string | null
+          updated_at?: string
+          user_id?: string
         }
         Relationships: []
       }
@@ -201,11 +255,24 @@ export type Database = {
         }
         Returns: boolean
       }
+      my_referral_points: { Args: never; Returns: number }
       plan_sales_counts: {
         Args: never
         Returns: {
           plan_key: string
           sold: number
+        }[]
+      }
+      referral_lookup: { Args: { _code: string }; Returns: string }
+      referral_points: { Args: { _user_id: string }; Returns: number }
+      referred_orders: {
+        Args: { _user_id: string }
+        Returns: {
+          created_at: string
+          full_name: string
+          id: string
+          plan_key: string
+          status: string
         }[]
       }
     }
