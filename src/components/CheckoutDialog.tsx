@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Send, Upload } from "lucide-react";
+import { Send, Ticket, Upload } from "lucide-react";
 import { toast } from "sonner";
 import { z } from "zod";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
