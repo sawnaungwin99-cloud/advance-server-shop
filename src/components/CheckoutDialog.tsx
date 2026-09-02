@@ -12,6 +12,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { notifyOrder } from "@/lib/telegram.functions";
 import { useLang } from "@/lib/i18n";
 import { TELEGRAM_URL, type Plan } from "@/lib/plans";
+import { SELF_REFERRAL_ERROR, discountForPrice, mmk } from "@/lib/referral";
 
 const schema = z.object({
   full_name: z.string().trim().min(2).max(100),
