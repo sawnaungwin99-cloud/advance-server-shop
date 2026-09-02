@@ -14,6 +14,7 @@ import { reportLovableError } from "../lib/lovable-error-reporting";
 import { Toaster } from "@/components/ui/sonner";
 import { LanguageProvider } from "@/lib/i18n";
 import { AuthProvider } from "@/hooks/useAuth";
+import { VpnNotice } from "@/components/VpnNotice";
 
 
 function NotFoundComponent() {
@@ -139,6 +140,7 @@ function RootComponent() {
         <AuthProvider>
           {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
           <Outlet />
+          <VpnNotice />
           <Toaster position="top-center" richColors />
         </AuthProvider>
       </LanguageProvider>
