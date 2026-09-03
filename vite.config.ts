@@ -7,6 +7,22 @@
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 
 export default defineConfig({
+  vite: {
+    // Some production builders provide the managed backend values only under
+    // their server-side names. The browser client needs the same public URL
+    // and publishable key embedded at build time, so bridge those values when
+    // the VITE-prefixed aliases are unavailable.
+    define: {
+      "import.meta.env.VITE_SUPABASE_URL": JSON.stringify(
+        process.env["VITE_SUPABASE_URL"] ?? process.env["SUPABASE_URL"] ?? "",
+      ),
+      "import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY": JSON.stringify(
+        process.env["VITE_SUPABASE_PUBLISHABLE_KEY"] ??
+          process.env["SUPABASE_PUBLISHABLE_KEY"] ??
+          "",
+      ),
+    },
+  },
   tanstackStart: {
     // Redirect TanStack Start's bundled server entry to src/server.ts (our SSR error wrapper).
     // nitro/vite builds from this
