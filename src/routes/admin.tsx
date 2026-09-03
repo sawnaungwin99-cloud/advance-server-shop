@@ -20,6 +20,7 @@ import { PLANS } from "@/lib/plans";
 import { notifyDelivered } from "@/lib/order-delivery.functions";
 import { assignStockToOrder } from "@/lib/inventory.functions";
 import { AdminInventory } from "@/components/AdminInventory";
+import { AdminReferralClaims } from "@/components/AdminReferralClaims";
 import { DeliveredCredentials } from "@/components/DeliveredCredentials";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
@@ -199,9 +200,10 @@ function AdminPage() {
         <h1 className="text-2xl font-bold text-gradient">{t("admin_title")}</h1>
 
         <Tabs defaultValue="orders" className="mt-6">
-          <TabsList className="grid w-full grid-cols-2 sm:w-96">
+          <TabsList className="grid w-full grid-cols-3 sm:w-[36rem]">
             <TabsTrigger value="orders">Orders</TabsTrigger>
             <TabsTrigger value="stock">Stock / Inventory</TabsTrigger>
+            <TabsTrigger value="claims">Referral Claims</TabsTrigger>
           </TabsList>
 
           <TabsContent value="orders">
@@ -374,6 +376,10 @@ function AdminPage() {
 
           <TabsContent value="stock" className="mt-6">
             <AdminInventory />
+          </TabsContent>
+
+          <TabsContent value="claims" className="mt-6">
+            <AdminReferralClaims />
           </TabsContent>
         </Tabs>
       </main>
