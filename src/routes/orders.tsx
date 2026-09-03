@@ -6,6 +6,7 @@ import { Send } from "lucide-react";
 import { Header } from "@/components/Header";
 import { TelegramFab } from "@/components/TelegramFab";
 import { DeliveredCredentials } from "@/components/DeliveredCredentials";
+import { ReferralProgram } from "@/components/ReferralProgram";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
