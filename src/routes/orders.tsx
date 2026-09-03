@@ -94,6 +94,8 @@ function OrdersPage() {
           </div>
         )}
 
+        {user && <ReferralProgram />}
+
         {user && (
           <div className="mt-6 space-y-4">
             {orders?.length === 0 && <p className="text-sm text-muted-foreground">{t("orders_empty")}</p>}
