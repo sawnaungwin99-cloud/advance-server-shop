@@ -14,11 +14,11 @@ export default defineConfig({
     // the VITE-prefixed aliases are unavailable.
     define: {
       "import.meta.env.VITE_SUPABASE_URL": JSON.stringify(
-        process.env.VITE_SUPABASE_URL ?? process.env.SUPABASE_URL ?? "",
+        process.env["VITE_SUPABASE_URL"] ?? process.env["SUPABASE_URL"] ?? "",
       ),
       "import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY": JSON.stringify(
-        process.env.VITE_SUPABASE_PUBLISHABLE_KEY ??
-          process.env.SUPABASE_PUBLISHABLE_KEY ??
+        process.env["VITE_SUPABASE_PUBLISHABLE_KEY"] ??
+          process.env["SUPABASE_PUBLISHABLE_KEY"] ??
           "",
       ),
     },
