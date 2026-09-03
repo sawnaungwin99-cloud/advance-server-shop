@@ -278,6 +278,47 @@ export function CheckoutDialog({
               </div>
 
               <div className="space-y-1.5">
+                <Label htmlFor="promo">Promo Code ထည့်ရန်</Label>
+                <div className="flex gap-2">
+                  <Input
+                    id="promo"
+                    maxLength={40}
+                    placeholder="SNW-USER-101"
+                    value={promo}
+                    onChange={(e) => {
+                      setPromo(e.target.value);
+                      setApplied(null);
+                    }}
+                  />
+                  <Button
+                    type="button"
+                    variant="outline"
+                    disabled={checking || !promo.trim()}
+                    onClick={applyPromo}
+                  >
+                    {checking ? "..." : "အတည်ပြုရန်"}
+                  </Button>
+                </div>
+              </div>
+
+              <div className="space-y-1 rounded-xl border border-border/60 bg-secondary/30 px-3 py-3 text-sm">
+                <div className="flex items-center justify-between text-muted-foreground">
+                  <span>ကျသင့်ငွေ</span>
+                  <span>{mmk(plan?.price ?? 0)}</span>
+                </div>
+                {discount > 0 && (
+                  <div className="flex items-center justify-between text-emerald-400">
+                    <span>Promo လျှော့ငွေ{applied ? ` (${applied.code})` : ""}</span>
+                    <span>- {mmk(discount)}</span>
+                  </div>
+                )}
+                <div className="flex items-center justify-between border-t border-border/60 pt-2 font-bold text-gold">
+                  <span>စုစုပေါင်း ပေးရမည့်ငွေ</span>
+                  <span>{mmk(finalPrice)}</span>
+                </div>
+              </div>
+
+              <div className="space-y-1.5">
                 <Label htmlFor="receipt">{t("f_receipt")}</Label>
                 <label
                   htmlFor="receipt"
