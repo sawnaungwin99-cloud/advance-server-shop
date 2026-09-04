@@ -11,12 +11,12 @@ import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 // them here from the managed server binding also covers production builds
 // where only the unprefixed variables are available to Vite.
 const supabaseUrl =
-  process.env.VITE_SUPABASE_URL ??
-  process.env.SUPABASE_URL ??
+  process.env["VITE_SUPABASE_URL"] ??
+  process.env["SUPABASE_URL"] ??
   "https://vgynbwubsolqkrnsxizq.supabase.co";
 const supabasePublishableKey =
-  process.env.VITE_SUPABASE_PUBLISHABLE_KEY ??
-  process.env.SUPABASE_PUBLISHABLE_KEY ??
+  process.env["VITE_SUPABASE_PUBLISHABLE_KEY"] ??
+  process.env["SUPABASE_PUBLISHABLE_KEY"] ??
   "sb_publishable_UC0U5lQJarCVd3B-X0UoqQ_ujeR5gHR";
 
 export default defineConfig({
