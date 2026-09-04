@@ -6,7 +6,28 @@
 // You can pass additional config via defineConfig({ vite: { ... }, etc... }) if needed.
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 
+// These values are public browser configuration (not service credentials).
+// Lovable Cloud normally injects their VITE_ forms automatically. Defining
+// them here from the managed server binding also covers production builds
+// where only the unprefixed variables are available to Vite.
+const supabaseUrl =
+  process.env["VITE_SUPABASE_URL"] ??
+  process.env["SUPABASE_URL"] ??
+  "https://vgynbwubsolqkrnsxizq.supabase.co";
+const supabasePublishableKey =
+  process.env["VITE_SUPABASE_PUBLISHABLE_KEY"] ??
+  process.env["SUPABASE_PUBLISHABLE_KEY"] ??
+  "sb_publishable_UC0U5lQJarCVd3B-X0UoqQ_ujeR5gHR";
+
 export default defineConfig({
+  vite: {
+    define: {
+      "import.meta.env.VITE_SUPABASE_URL": JSON.stringify(supabaseUrl),
+      "import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY": JSON.stringify(
+        supabasePublishableKey,
+      ),
+    },
+  },
   tanstackStart: {
     // Redirect TanStack Start's bundled server entry to src/server.ts (our SSR error wrapper).
     // nitro/vite builds from this
