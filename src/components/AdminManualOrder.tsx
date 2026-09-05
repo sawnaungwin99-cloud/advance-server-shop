@@ -44,7 +44,7 @@ export function AdminManualOrder() {
 
       let receiptPath: string | null = null;
       if (file) {
-        const path = `manual/${uid}/${Date.now()}-${file.name.replace(/[^\w.-]/g, "_")}`;
+        const path = `${uid}/manual-${Date.now()}-${file.name.replace(/[^\w.-]/g, "_")}`;
         const { error: upErr } = await supabase.storage.from("receipts").upload(path, file);
         if (upErr) throw upErr;
         receiptPath = path;
