@@ -380,6 +380,10 @@ function AdminPage() {
         )}
           </TabsContent>
 
+          <TabsContent value="analytics" className="mt-6">
+            <AdminAnalytics />
+          </TabsContent>
+
           <TabsContent value="stock" className="mt-6">
             <AdminInventory />
           </TabsContent>
