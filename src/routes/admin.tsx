@@ -21,6 +21,8 @@ import { notifyDelivered } from "@/lib/order-delivery.functions";
 import { assignStockToOrder } from "@/lib/inventory.functions";
 import { AdminInventory } from "@/components/AdminInventory";
 import { AdminReferralClaims } from "@/components/AdminReferralClaims";
+import { AdminAnalytics } from "@/components/AdminAnalytics";
+import { AdminManualOrder } from "@/components/AdminManualOrder";
 import { DeliveredCredentials } from "@/components/DeliveredCredentials";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
@@ -200,14 +202,18 @@ function AdminPage() {
         <h1 className="text-2xl font-bold text-gradient">{t("admin_title")}</h1>
 
         <Tabs defaultValue="orders" className="mt-6">
-          <TabsList className="grid w-full grid-cols-3 sm:w-[36rem]">
+          <TabsList className="grid w-full grid-cols-2 sm:w-[44rem] sm:grid-cols-4">
             <TabsTrigger value="orders">Orders</TabsTrigger>
+            <TabsTrigger value="analytics">စာရင်းဇယား</TabsTrigger>
             <TabsTrigger value="stock">Stock / Inventory</TabsTrigger>
             <TabsTrigger value="claims">Referral Claims</TabsTrigger>
           </TabsList>
 
           <TabsContent value="orders">
-        <div className="mt-6 flex flex-col gap-3 lg:flex-row">
+        <div className="mt-6 flex justify-end">
+          <AdminManualOrder />
+        </div>
+        <div className="mt-4 flex flex-col gap-3 lg:flex-row">
 
           <div className="relative flex-1">
             <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
@@ -372,6 +378,10 @@ function AdminPage() {
             className="mt-6 max-h-96 rounded-xl border border-border"
           />
         )}
+          </TabsContent>
+
+          <TabsContent value="analytics" className="mt-6">
+            <AdminAnalytics />
           </TabsContent>
 
           <TabsContent value="stock" className="mt-6">

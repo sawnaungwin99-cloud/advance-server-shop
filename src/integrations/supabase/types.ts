@@ -69,6 +69,7 @@ export type Database = {
           receipt_path: string | null
           referral_code: string | null
           referrer_id: string | null
+          source: string
           status: string
           target_gmail: string
           telegram_username: string | null
@@ -91,6 +92,7 @@ export type Database = {
           receipt_path?: string | null
           referral_code?: string | null
           referrer_id?: string | null
+          source?: string
           status?: string
           target_gmail: string
           telegram_username?: string | null
@@ -113,6 +115,7 @@ export type Database = {
           receipt_path?: string | null
           referral_code?: string | null
           referrer_id?: string | null
+          source?: string
           status?: string
           target_gmail?: string
           telegram_username?: string | null
