@@ -125,6 +125,7 @@ export function AdminAnalytics() {
 
       <div className="metal-card overflow-x-auto rounded-2xl p-4">
         <p className="text-sm font-semibold text-primary">အသေးစိတ် အရောင်းစာရင်း</p>
+        <p className="text-[11px] text-muted-foreground">နောက်ဆုံး ၁၀ ခုကိုသာ ပြသထားပါသည်။</p>
         <table className="mt-3 w-full min-w-[640px] text-left text-sm">
           <thead className="text-xs text-muted-foreground">
             <tr>
@@ -143,7 +144,7 @@ export function AdminAnalytics() {
                 </td>
               </tr>
             )}
-            {ranged.map((r) => (
+            {ranged.slice(0, 10).map((r) => (
               <tr key={r.id} className="border-t border-border/50">
                 <td className="py-2 text-muted-foreground">
                   {new Date(r.created_at).toLocaleDateString()}
