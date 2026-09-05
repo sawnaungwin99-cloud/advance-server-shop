@@ -21,6 +21,8 @@ import { notifyDelivered } from "@/lib/order-delivery.functions";
 import { assignStockToOrder } from "@/lib/inventory.functions";
 import { AdminInventory } from "@/components/AdminInventory";
 import { AdminReferralClaims } from "@/components/AdminReferralClaims";
+import { AdminAnalytics } from "@/components/AdminAnalytics";
+import { AdminManualOrder } from "@/components/AdminManualOrder";
 import { DeliveredCredentials } from "@/components/DeliveredCredentials";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
