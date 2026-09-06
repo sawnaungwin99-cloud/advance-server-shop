@@ -6,6 +6,9 @@ export type Plan = {
   nameMy: string;
   nameEn: string;
   popular?: boolean;
+  isFlashSale?: boolean;
+  originalPrice?: number;
+  originalPriceLabel?: string;
   overview: string;
   warning: string;
   required: string[];
