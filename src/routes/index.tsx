@@ -107,6 +107,8 @@ function Home() {
           </div>
         </section>
 
+        <FlashSaleSection onBuy={onBuy} />
+
         <section id="plans" className="mx-auto max-w-6xl px-4 pb-20">
           <div className="mb-8 text-center">
             <h2 className="text-2xl font-bold text-gradient sm:text-3xl">{t("plans_title")}</h2>
