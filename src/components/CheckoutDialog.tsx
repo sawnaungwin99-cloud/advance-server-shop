@@ -77,7 +77,7 @@ export function CheckoutDialog({
     }
   }, [user, open]);
 
-  const discount = applied?.discount ?? 0;
+  const discount = plan?.isFlashSale ? 0 : (applied?.discount ?? 0);
   const finalPrice = Math.max(0, (plan?.price ?? 0) - discount);
 
   const close = (v: boolean) => {
@@ -154,8 +154,8 @@ export function CheckoutDialog({
         plan_key: plan.key,
         price_mmk: finalPrice,
         discount_mmk: discount,
-        referral_code: applied?.code ?? null,
-        referrer_id: applied?.referrer_id ?? null,
+        referral_code: plan.isFlashSale ? null : (applied?.code ?? null),
+        referrer_id: plan.isFlashSale ? null : (applied?.referrer_id ?? null),
         receipt_path: path,
         ...parsed.data,
       });
@@ -277,29 +277,35 @@ export function CheckoutDialog({
                 />
               </div>
 
-              <div className="space-y-1.5">
-                <Label htmlFor="promo">Promo Code ထည့်ရန်</Label>
-                <div className="flex gap-2">
-                  <Input
-                    id="promo"
-                    maxLength={40}
-                    placeholder="SNW-USER-101"
-                    value={promo}
-                    onChange={(e) => {
-                      setPromo(e.target.value);
-                      setApplied(null);
-                    }}
-                  />
-                  <Button
-                    type="button"
-                    variant="outline"
-                    disabled={checking || !promo.trim()}
-                    onClick={applyPromo}
-                  >
-                    {checking ? "..." : "အတည်ပြုရန်"}
-                  </Button>
+              {plan?.isFlashSale ? (
+                <p className="rounded-xl border border-red-500/50 bg-red-600/10 px-3 py-3 text-xs leading-relaxed text-red-200">
+                  ⚠️ အထူးလျော့ဈေး Plan များကို Promo Code ဖြင့် ထပ်မံ လျှော့ဝယ်၍ မရပါ။
+                </p>
+              ) : (
+                <div className="space-y-1.5">
+                  <Label htmlFor="promo">Promo Code ထည့်ရန်</Label>
+                  <div className="flex gap-2">
+                    <Input
+                      id="promo"
+                      maxLength={40}
+                      placeholder="SNW-USER-101"
+                      value={promo}
+                      onChange={(e) => {
+                        setPromo(e.target.value);
+                        setApplied(null);
+                      }}
+                    />
+                    <Button
+                      type="button"
+                      variant="outline"
+                      disabled={checking || !promo.trim()}
+                      onClick={applyPromo}
+                    >
+                      {checking ? "..." : "အတည်ပြုရန်"}
+                    </Button>
+                  </div>
                 </div>
-              </div>
+              )}
 
               <div className="space-y-1 rounded-xl border border-border/60 bg-secondary/30 px-3 py-3 text-sm">
                 <div className="flex items-center justify-between text-muted-foreground">

@@ -8,6 +8,8 @@ import { Header } from "@/components/Header";
 import { PlanCard } from "@/components/PlanCard";
 import { CheckoutDialog } from "@/components/CheckoutDialog";
 import { TelegramFab } from "@/components/TelegramFab";
+import { FlashSaleSection } from "@/components/FlashSaleSection";
+import { FLASH_PLANS } from "@/lib/flash-sale";
 
 import { useLang } from "@/lib/i18n";
 import { PLANS, type Plan } from "@/lib/plans";
@@ -60,7 +62,7 @@ function Home() {
         const raw = sessionStorage.getItem("snw-pending-checkout");
         if (raw) {
           const pending = JSON.parse(raw) as { planKey: string };
-          const pendingPlan = PLANS.find((p) => p.key === pending.planKey);
+          const pendingPlan = [...PLANS, ...FLASH_PLANS].find((p) => p.key === pending.planKey);
           if (pendingPlan) {
             setPlan(pendingPlan);
             setOpen(true);
@@ -106,6 +108,8 @@ function Home() {
             </div>
           </div>
         </section>
+
+        <FlashSaleSection onBuy={onBuy} />
 
         <section id="plans" className="mx-auto max-w-6xl px-4 pb-20">
           <div className="mb-8 text-center">
