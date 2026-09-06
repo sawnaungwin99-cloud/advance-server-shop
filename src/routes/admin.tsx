@@ -22,6 +22,7 @@ import { assignStockToOrder } from "@/lib/inventory.functions";
 import { AdminInventory } from "@/components/AdminInventory";
 import { AdminReferralClaims } from "@/components/AdminReferralClaims";
 import { AdminAnalytics } from "@/components/AdminAnalytics";
+import { AdminFlashSale } from "@/components/AdminFlashSale";
 import { AdminManualOrder } from "@/components/AdminManualOrder";
 import { DeliveredCredentials } from "@/components/DeliveredCredentials";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -202,11 +203,12 @@ function AdminPage() {
         <h1 className="text-2xl font-bold text-gradient">{t("admin_title")}</h1>
 
         <Tabs defaultValue="orders" className="mt-6">
-          <TabsList className="grid w-full grid-cols-2 sm:w-[44rem] sm:grid-cols-4">
+          <TabsList className="grid w-full grid-cols-2 sm:w-[52rem] sm:grid-cols-5">
             <TabsTrigger value="orders">Orders</TabsTrigger>
             <TabsTrigger value="analytics">စာရင်းဇယား</TabsTrigger>
             <TabsTrigger value="stock">Stock / Inventory</TabsTrigger>
             <TabsTrigger value="claims">Referral Claims</TabsTrigger>
+            <TabsTrigger value="flash">အထူးလျော့ဈေး</TabsTrigger>
           </TabsList>
 
           <TabsContent value="orders">
@@ -386,6 +388,10 @@ function AdminPage() {
 
           <TabsContent value="stock" className="mt-6">
             <AdminInventory />
+          </TabsContent>
+
+          <TabsContent value="flash" className="mt-6">
+            <AdminFlashSale />
           </TabsContent>
 
           <TabsContent value="claims" className="mt-6">
