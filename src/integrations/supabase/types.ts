@@ -14,6 +14,30 @@ export type Database = {
   }
   public: {
     Tables: {
+      flash_sale_settings: {
+        Row: {
+          ends_at: string | null
+          id: string
+          is_active: boolean
+          start_at: string | null
+          updated_at: string
+        }
+        Insert: {
+          ends_at?: string | null
+          id?: string
+          is_active?: boolean
+          start_at?: string | null
+          updated_at?: string
+        }
+        Update: {
+          ends_at?: string | null
+          id?: string
+          is_active?: boolean
+          start_at?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       order_audit_logs: {
         Row: {
           changed_by: string | null
