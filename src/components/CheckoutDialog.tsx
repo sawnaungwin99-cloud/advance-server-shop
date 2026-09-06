@@ -154,8 +154,8 @@ export function CheckoutDialog({
         plan_key: plan.key,
         price_mmk: finalPrice,
         discount_mmk: discount,
-        referral_code: applied?.code ?? null,
-        referrer_id: applied?.referrer_id ?? null,
+        referral_code: plan.isFlashSale ? null : (applied?.code ?? null),
+        referrer_id: plan.isFlashSale ? null : (applied?.referrer_id ?? null),
         receipt_path: path,
         ...parsed.data,
       });
