@@ -77,7 +77,7 @@ export function CheckoutDialog({
     }
   }, [user, open]);
 
-  const discount = applied?.discount ?? 0;
+  const discount = plan?.isFlashSale ? 0 : (applied?.discount ?? 0);
   const finalPrice = Math.max(0, (plan?.price ?? 0) - discount);
 
   const close = (v: boolean) => {
