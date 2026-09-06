@@ -203,13 +203,14 @@ function AdminPage() {
         <h1 className="text-2xl font-bold text-gradient">{t("admin_title")}</h1>
 
         <Tabs defaultValue="orders" className="mt-6">
-          <TabsList className="grid w-full grid-cols-2 sm:w-[52rem] sm:grid-cols-5">
-            <TabsTrigger value="orders">Orders</TabsTrigger>
-            <TabsTrigger value="analytics">စာရင်းဇယား</TabsTrigger>
-            <TabsTrigger value="stock">Stock / Inventory</TabsTrigger>
-            <TabsTrigger value="claims">Referral Claims</TabsTrigger>
-            <TabsTrigger value="flash">အထူးလျော့ဈေး</TabsTrigger>
+          <TabsList className="grid h-auto w-full grid-cols-2 gap-1 p-1 sm:w-[52rem] sm:grid-cols-5">
+            <TabsTrigger value="orders" className="w-full whitespace-normal text-xs sm:text-sm">Orders</TabsTrigger>
+            <TabsTrigger value="analytics" className="w-full whitespace-normal text-xs sm:text-sm">စာရင်းဇယား</TabsTrigger>
+            <TabsTrigger value="stock" className="w-full whitespace-normal text-xs sm:text-sm">Stock / Inventory</TabsTrigger>
+            <TabsTrigger value="claims" className="w-full whitespace-normal text-xs sm:text-sm">Referral Claims</TabsTrigger>
+            <TabsTrigger value="flash" className="col-span-2 w-full whitespace-normal text-xs sm:col-span-1 sm:text-sm">အထူးလျော့ဈေး</TabsTrigger>
           </TabsList>
+
 
           <TabsContent value="orders">
         <div className="mt-6 flex justify-end">
