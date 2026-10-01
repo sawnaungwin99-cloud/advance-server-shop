@@ -6,6 +6,33 @@ import { supabase } from "@/integrations/supabase/client";
 import { FLASH_PLANS, countdownFrom, pad2 } from "@/lib/flash-sale";
 import type { Plan } from "@/lib/plans";
 
+const LANTERNS = [
+  { color: "text-gold", string: "h-6", delay: "lantern-delay-1" },
+  { color: "text-primary", string: "h-10", delay: "lantern-delay-2" },
+  { color: "text-destructive", string: "h-5", delay: "lantern-delay-3" },
+  { color: "text-success", string: "h-9", delay: "lantern-delay-4" },
+  { color: "text-gold", string: "h-7", delay: "lantern-delay-5" },
+] as const;
+
+function ThadingyutLanterns() {
+  return (
+    <div className="pointer-events-none absolute inset-x-3 top-0 z-10 flex justify-around" aria-hidden="true">
+      {LANTERNS.map((lantern, index) => (
+        <div key={index} className={`festival-lantern ${lantern.color} ${lantern.delay}`}>
+          <span className={`block w-px bg-current/55 ${lantern.string}`} />
+          <svg viewBox="0 0 44 58" className="h-12 w-9 overflow-visible drop-shadow-lg sm:h-14 sm:w-11">
+            <path d="M15 4h14l3 5H12l3-5Z" fill="currentColor" opacity=".75" />
+            <path d="M10 11c0-3 24-3 24 0v29c0 8-24 8-24 0V11Z" fill="currentColor" />
+            <path d="M15 12v29M22 10v34M29 12v29" fill="none" stroke="currentColor" strokeWidth="2" opacity=".45" />
+            <ellipse cx="22" cy="25" rx="7" ry="13" fill="var(--background)" opacity=".18" />
+            <path d="M14 45h16l-3 5H17l-3-5ZM19 50v6m6-6v6" fill="currentColor" stroke="currentColor" strokeWidth="2" />
+          </svg>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 function Unit({ value, label }: { value: number; label: string }) {
   return (
     <div className="min-w-[4.25rem] rounded-xl border border-red-500/40 bg-black/50 px-3 py-2 text-center">
@@ -43,7 +70,10 @@ export function FlashSaleSection({ onBuy }: { onBuy: (p: Plan) => void }) {
 
   return (
     <section className="px-4 pb-6">
-      <div className="mx-auto max-w-5xl rounded-3xl border-2 border-red-600/70 bg-gradient-to-b from-red-950/70 via-black/70 to-black/70 p-5 shadow-[0_0_45px_-8px_rgba(239,68,68,0.75)] sm:p-8">
+      <div
+        className={`relative mx-auto max-w-5xl rounded-3xl border-2 border-red-600/70 bg-gradient-to-b from-red-950/70 via-black/70 to-black/70 p-5 shadow-[0_0_45px_-8px_rgba(239,68,68,0.75)] sm:p-8 ${settings.is_thadingyut_theme ? "pt-24 sm:pt-28" : ""}`}
+      >
+        {settings.is_thadingyut_theme && <ThadingyutLanterns />}
         <div className="text-center">
           <span className="inline-flex items-center gap-2 rounded-full border border-red-500/60 bg-red-600/20 px-4 py-1 text-xs font-semibold text-red-200">
             <Flame className="size-4 animate-pulse text-red-400" /> FLASH SALE

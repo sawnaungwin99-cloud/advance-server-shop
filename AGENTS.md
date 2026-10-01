@@ -8,3 +8,5 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+
+- Flash-sale festival decoration is controlled by `flash_sale_settings.is_thadingyut_theme` so admin and storefront share one source of truth.

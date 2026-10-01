@@ -171,3 +171,30 @@
     8px 10px 18px oklch(0.08 0 0 / 0.7);
   filter: drop-shadow(0 0 8px oklch(0.82 0.15 88 / 0.55));
 }
+
+@keyframes lantern-sway {
+  0%,
+  100% {
+    transform: rotate(-4deg);
+  }
+  50% {
+    transform: rotate(4deg);
+  }
+}
+
+.festival-lantern {
+  transform-origin: top center;
+  animation: lantern-sway 3.8s ease-in-out infinite;
+}
+
+.lantern-delay-1 { animation-delay: -0.4s; }
+.lantern-delay-2 { animation-delay: -1.6s; }
+.lantern-delay-3 { animation-delay: -2.5s; }
+.lantern-delay-4 { animation-delay: -0.9s; }
+.lantern-delay-5 { animation-delay: -2.1s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .festival-lantern {
+    animation: none;
+  }
+}
