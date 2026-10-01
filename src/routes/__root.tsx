@@ -6,6 +6,7 @@ import {
   useRouter,
   HeadContent,
   Scripts,
+  type ErrorComponentProps,
 } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
 
@@ -39,12 +40,33 @@ function NotFoundComponent() {
   );
 }
 
-function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
-  console.error(error);
+function ErrorComponent({ error, reset }: ErrorComponentProps) {
+  const normalizedError = error instanceof Error ? error : new Error(String(error));
+  console.error(normalizedError);
   const router = useRouter();
+  const isAbortedRequest = normalizedError.message.toLowerCase() === "aborted";
+
   useEffect(() => {
-    reportLovableError(error, { boundary: "tanstack_root_error_component" });
-  }, [error]);
+    reportLovableError(normalizedError, { boundary: "tanstack_root_error_component" });
+  }, [normalizedError]);
+
+  useEffect(() => {
+    if (!isAbortedRequest) return;
+
+    const retry = window.setTimeout(() => {
+      router.invalidate().finally(reset);
+    }, 350);
+
+    return () => window.clearTimeout(retry);
+  }, [isAbortedRequest, reset, router]);
+
+  if (isAbortedRequest) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-background px-4 text-sm text-muted-foreground">
+        စာမျက်နှာ ပြန်လည်ဖွင့်နေပါသည်…
+      </div>
+    );
+  }
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">

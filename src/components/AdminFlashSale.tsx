@@ -32,7 +32,12 @@ export function AdminFlashSale() {
   });
 
   const save = useMutation({
-    mutationFn: async (patch: { is_active?: boolean; start_at?: string | null; ends_at?: string | null }) => {
+    mutationFn: async (patch: {
+      is_active?: boolean;
+      is_thadingyut_theme?: boolean;
+      start_at?: string | null;
+      ends_at?: string | null;
+    }) => {
       if (settings?.id) {
         const { error } = await supabase.from("flash_sale_settings").update(patch).eq("id", settings.id);
         if (error) throw error;
@@ -65,6 +70,18 @@ export function AdminFlashSale() {
           id="flash-toggle"
           checked={Boolean(settings?.is_active)}
           onCheckedChange={(v) => save.mutate({ is_active: v })}
+        />
+      </div>
+
+      <div className="mt-3 flex items-center justify-between gap-4 rounded-xl border border-border/60 bg-secondary/30 px-4 py-3">
+        <Label htmlFor="thadingyut-toggle" className="text-sm leading-relaxed">
+          သီတင်းကျွတ် မီးပုံးအလှ ဖွင့်/ပိတ်
+        </Label>
+        <Switch
+          id="thadingyut-toggle"
+          checked={Boolean(settings?.is_thadingyut_theme)}
+          disabled={save.isPending}
+          onCheckedChange={(value) => save.mutate({ is_thadingyut_theme: value })}
         />
       </div>
 
