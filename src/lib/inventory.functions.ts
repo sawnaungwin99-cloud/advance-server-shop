@@ -1,6 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
+import { getInventoryPlanKey } from "@/lib/inventory-plan";
 
 export const assignStockToOrder = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
@@ -30,14 +31,17 @@ export const assignStockToOrder = createServerFn({ method: "POST" })
       };
     }
 
-    const { data: stock } = await context.supabase
+    const inventoryPlanKey = getInventoryPlanKey(order.plan_key);
+
+    const { data: stock, error: stockErr } = await context.supabase
       .from("stock_accounts")
       .select("id, username, password")
-      .eq("plan_key", order.plan_key)
+      .eq("plan_key", inventoryPlanKey)
       .eq("status", "available")
       .order("created_at", { ascending: true })
       .limit(1)
       .maybeSingle();
+    if (stockErr) throw stockErr;
 
     if (!stock) return { assigned: false as const, reason: "out_of_stock" as const };
 
