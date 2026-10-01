@@ -42,9 +42,29 @@ function NotFoundComponent() {
 function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   console.error(error);
   const router = useRouter();
+  const isAbortedRequest = error.message.toLowerCase() === "aborted";
+
   useEffect(() => {
     reportLovableError(error, { boundary: "tanstack_root_error_component" });
   }, [error]);
+
+  useEffect(() => {
+    if (!isAbortedRequest) return;
+
+    const retry = window.setTimeout(() => {
+      router.invalidate().finally(reset);
+    }, 350);
+
+    return () => window.clearTimeout(retry);
+  }, [isAbortedRequest, reset, router]);
+
+  if (isAbortedRequest) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-background px-4 text-sm text-muted-foreground">
+        စာမျက်နှာ ပြန်လည်ဖွင့်နေပါသည်…
+      </div>
+    );
+  }
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
