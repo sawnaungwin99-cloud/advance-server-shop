@@ -95,7 +95,23 @@ function Home() {
               <a href="#plans">{t("hero_cta")}</a>
             </Button>
 
-            {user && <ReferralProgram />}
+            <div className="mt-4">
+              {user && (
+                <Button variant="outline" size="lg" className="glow-cyan border-gold/50 text-gold" onClick={() => setReferralOpen(true)}>
+                  <Gift className="size-5" />
+                  Advance Server Free ရယူရန်
+                </Button>
+              )}
+            </div>
+
+            {user && (
+              <Dialog open={referralOpen} onOpenChange={setReferralOpen}>
+                <DialogContent className="max-h-[85vh] overflow-y-auto sm:max-w-lg">
+                  <DialogTitle className="sr-only">Advance Server Free ရယူရန်</DialogTitle>
+                  <ReferralProgram />
+                </DialogContent>
+              </Dialog>
+            )}
 
             <div className="mx-auto mt-10 grid max-w-xl grid-cols-3 gap-3 text-xs text-muted-foreground">
               <div className="metal-card rounded-xl p-3">
