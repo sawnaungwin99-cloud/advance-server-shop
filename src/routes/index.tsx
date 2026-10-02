@@ -9,6 +9,7 @@ import { PlanCard } from "@/components/PlanCard";
 import { CheckoutDialog } from "@/components/CheckoutDialog";
 import { TelegramFab } from "@/components/TelegramFab";
 import { FlashSaleSection } from "@/components/FlashSaleSection";
+import { ReferralProgram } from "@/components/ReferralProgram";
 import { FLASH_PLANS } from "@/lib/flash-sale";
 
 import { useLang } from "@/lib/i18n";
@@ -92,6 +93,8 @@ function Home() {
             <Button asChild size="lg" className="mt-8 glow-cyan">
               <a href="#plans">{t("hero_cta")}</a>
             </Button>
+
+            {user && <ReferralProgram />}
 
             <div className="mx-auto mt-10 grid max-w-xl grid-cols-3 gap-3 text-xs text-muted-foreground">
               <div className="metal-card rounded-xl p-3">

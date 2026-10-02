@@ -87,7 +87,7 @@ export function ReferralProgram() {
     <section className="metal-card mt-6 rounded-2xl p-5">
       <h2 className="flex items-center gap-2 text-lg font-bold text-gradient">
         <Users className="size-5 text-primary" />
-        သူငယ်ချင်းဖိတ်ခေါ်မှု (Referral Program)
+        Advance Server Free ရယူရန်
       </h2>
 
       <div className="mt-4 rounded-xl border border-primary/30 bg-primary/5 p-4">
