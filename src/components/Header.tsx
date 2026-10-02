@@ -1,10 +1,11 @@
 import { Link, useNavigate } from "@tanstack/react-router";
-import { Gamepad2, LogOut, Menu } from "lucide-react";
+import { LogOut, Menu } from "lucide-react";
 import { useState } from "react";
 import { ContactDialog } from "@/components/ContactDialog";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
 import { useLang } from "@/lib/i18n";
+import snwLogo from "@/assets/snw-logo.jpg.asset.json";
 
 export function Header() {
   const { lang, setLang, t } = useLang();
@@ -62,9 +63,11 @@ export function Header() {
     <header className="sticky top-0 z-40 border-b border-border/70 bg-background/80 backdrop-blur-xl">
       <div className="mx-auto flex max-w-6xl items-center gap-3 px-4 py-3">
         <Link to="/" className="flex items-center gap-2">
-          <span className="flex size-9 items-center justify-center rounded-lg bg-secondary glow-cyan">
-            <Gamepad2 className="size-5 text-primary" />
-          </span>
+          <img
+            src={snwLogo.url}
+            alt="SNW Gaming logo"
+            className="size-9 rounded-full border border-border object-cover glow-gold"
+          />
           <span className="brand-title text-[11px] leading-tight sm:text-sm">
             <span className="text-gradient">SNW</span>{" "}
             <span className="text-foreground/90">Advance Server Shop</span>
