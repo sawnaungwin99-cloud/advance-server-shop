@@ -41,6 +41,7 @@ function Home() {
   const { user } = useAuth();
   const [plan, setPlan] = useState<Plan | null>(null);
   const [open, setOpen] = useState(false);
+  const [referralOpen, setReferralOpen] = useState(false);
 
   const { data: salesByPlan } = useQuery({
     queryKey: ["plan-sales-counts"],
