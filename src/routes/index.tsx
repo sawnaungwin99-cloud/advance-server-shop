@@ -12,7 +12,6 @@ import { TelegramFab } from "@/components/TelegramFab";
 import { FlashSaleSection } from "@/components/FlashSaleSection";
 import { ReferralProgram } from "@/components/ReferralProgram";
 import { FLASH_PLANS } from "@/lib/flash-sale";
-import snwLogo from "@/assets/snw-logo.jpg.asset.json";
 
 import { useLang } from "@/lib/i18n";
 import { PLANS, type Plan } from "@/lib/plans";
@@ -85,11 +84,6 @@ function Home() {
       <main>
         <section className="hero-aura relative overflow-hidden px-4 py-16 sm:py-24">
           <div className="mx-auto max-w-3xl text-center">
-            <img
-              src={snwLogo.url}
-              alt="SNW Gaming logo"
-              className="mx-auto mb-4 size-20 rounded-full border-2 border-gold/60 object-cover shadow-lg sm:size-24"
-            />
             <span className="inline-flex items-center gap-2 rounded-full border border-primary/40 bg-primary/10 px-4 py-1.5 text-xs text-primary">
               <Sparkles className="size-4" />
               <span className="snw-gaming text-2xl leading-none sm:text-3xl">SNW GAMING</span>
