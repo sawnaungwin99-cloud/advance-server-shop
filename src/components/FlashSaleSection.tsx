@@ -33,6 +33,38 @@ function ThadingyutLanterns() {
   );
 }
 
+const SNOWFLAKES = [
+  { left: "4%", size: "text-xs", delay: "snow-delay-1", drift: "snow-drift-left" },
+  { left: "12%", size: "text-lg", delay: "snow-delay-4", drift: "snow-drift-right" },
+  { left: "22%", size: "text-sm", delay: "snow-delay-2", drift: "snow-drift-left" },
+  { left: "31%", size: "text-xl", delay: "snow-delay-5", drift: "snow-drift-right" },
+  { left: "41%", size: "text-xs", delay: "snow-delay-3", drift: "snow-drift-left" },
+  { left: "50%", size: "text-lg", delay: "snow-delay-1", drift: "snow-drift-right" },
+  { left: "60%", size: "text-sm", delay: "snow-delay-5", drift: "snow-drift-left" },
+  { left: "69%", size: "text-xl", delay: "snow-delay-2", drift: "snow-drift-right" },
+  { left: "78%", size: "text-xs", delay: "snow-delay-4", drift: "snow-drift-left" },
+  { left: "87%", size: "text-lg", delay: "snow-delay-3", drift: "snow-drift-right" },
+  { left: "95%", size: "text-sm", delay: "snow-delay-1", drift: "snow-drift-left" },
+] as const;
+
+function ChristmasSnow() {
+  return (
+    <div className="pointer-events-none absolute inset-0 z-10 overflow-hidden rounded-[inherit]" aria-hidden="true">
+      <div className="christmas-snow-cap christmas-snow-cap-top" />
+      {SNOWFLAKES.map((flake, index) => (
+        <span
+          key={index}
+          className={`christmas-snowflake ${flake.size} ${flake.delay} ${flake.drift}`}
+          style={{ left: flake.left }}
+        >
+          ❄
+        </span>
+      ))}
+      <div className="christmas-snow-cap christmas-snow-cap-bottom" />
+    </div>
+  );
+}
+
 function Unit({ value, label }: { value: number; label: string }) {
   return (
     <div className="min-w-[4.25rem] rounded-xl border border-red-500/40 bg-black/50 px-3 py-2 text-center">
@@ -68,13 +100,17 @@ export function FlashSaleSection({ onBuy }: { onBuy: (p: Plan) => void }) {
   const cd = countdownFrom(settings?.ends_at, now);
   if (!settings?.is_active || cd.done) return null;
 
+  const christmas = Boolean(settings.is_christmas_theme);
+  const thadingyut = Boolean(settings.is_thadingyut_theme) && !christmas;
+
   return (
     <section className="px-4 pb-6">
       <div
-        className={`relative mx-auto max-w-5xl rounded-3xl border-2 border-red-600/70 bg-gradient-to-b from-red-950/70 via-black/70 to-black/70 p-5 shadow-[0_0_45px_-8px_rgba(239,68,68,0.75)] sm:p-8 ${settings.is_thadingyut_theme ? "pt-24 sm:pt-28" : ""}`}
+        className={`relative mx-auto max-w-5xl overflow-hidden rounded-3xl border-2 border-red-600/70 bg-gradient-to-b from-red-950/70 via-black/70 to-black/70 p-5 shadow-[0_0_45px_-8px_rgba(239,68,68,0.75)] sm:p-8 ${thadingyut ? "pt-24 sm:pt-28" : ""} ${christmas ? "christmas-sale-card pt-14 sm:pt-16" : ""}`}
       >
-        {settings.is_thadingyut_theme && <ThadingyutLanterns />}
-        <div className="text-center">
+        {thadingyut && <ThadingyutLanterns />}
+        {christmas && <ChristmasSnow />}
+        <div className="relative z-20 text-center">
           <span className="inline-flex items-center gap-2 rounded-full border border-red-500/60 bg-red-600/20 px-4 py-1 text-xs font-semibold text-red-200">
             <Flame className="size-4 animate-pulse text-red-400" /> FLASH SALE
           </span>
@@ -91,7 +127,7 @@ export function FlashSaleSection({ onBuy }: { onBuy: (p: Plan) => void }) {
           </div>
         </div>
 
-        <div className="mt-7 grid gap-4 sm:grid-cols-2">
+        <div className="relative z-20 mt-7 grid gap-4 sm:grid-cols-2">
           {FLASH_PLANS.map((p) => (
             <div
               key={p.key}
@@ -119,7 +155,7 @@ export function FlashSaleSection({ onBuy }: { onBuy: (p: Plan) => void }) {
           ))}
         </div>
 
-        <p className="mt-5 text-center text-xs text-red-200/70">
+        <p className="relative z-20 mt-5 text-center text-xs text-red-200/70">
           ⚠️ အထူးလျော့ဈေး Plan များကို Promo Code ဖြင့် ထပ်မံ လျှော့ဝယ်၍ မရပါ။
         </p>
       </div>

@@ -9,5 +9,5 @@
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
 
-- Flash-sale festival decoration is controlled by `flash_sale_settings.is_thadingyut_theme` so admin and storefront share one source of truth.
+- Flash-sale festival decorations are controlled by theme booleans in `flash_sale_settings`; Christmas takes visual priority when multiple themes are enabled.
 - Flash-sale order keys normalize to their regular base plan keys before stock lookup, so one inventory pool serves regular and sale orders.
