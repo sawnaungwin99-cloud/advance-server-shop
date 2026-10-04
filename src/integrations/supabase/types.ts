@@ -19,6 +19,7 @@ export type Database = {
           ends_at: string | null
           id: string
           is_active: boolean
+          is_christmas_theme: boolean
           is_thadingyut_theme: boolean
           start_at: string | null
           updated_at: string
@@ -27,6 +28,7 @@ export type Database = {
           ends_at?: string | null
           id?: string
           is_active?: boolean
+          is_christmas_theme?: boolean
           is_thadingyut_theme?: boolean
           start_at?: string | null
           updated_at?: string
@@ -35,6 +37,7 @@ export type Database = {
           ends_at?: string | null
           id?: string
           is_active?: boolean
+          is_christmas_theme?: boolean
           is_thadingyut_theme?: boolean
           start_at?: string | null
           updated_at?: string
