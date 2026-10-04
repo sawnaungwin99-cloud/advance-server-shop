@@ -8,6 +8,13 @@
       "when": 1790812976731,
       "tag": "0000_add_thadingyut_theme_to_flash_sale",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1791102641562,
+      "tag": "0001_add_christmas_flash_sale_theme",
+      "breakpoints": true
     }
   ]
 }

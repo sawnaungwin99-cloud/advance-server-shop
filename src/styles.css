@@ -193,8 +193,57 @@
 .lantern-delay-4 { animation-delay: -0.9s; }
 .lantern-delay-5 { animation-delay: -2.1s; }
 
+@keyframes christmas-snowfall {
+  0% { transform: translate3d(0, -3rem, 0) rotate(0deg); opacity: 0; }
+  12% { opacity: 0.9; }
+  88% { opacity: 0.9; }
+  100% { transform: translate3d(var(--snow-drift), 42rem, 0) rotate(300deg); opacity: 0; }
+}
+
+.christmas-sale-card {
+  border-color: color-mix(in oklab, var(--primary) 65%, var(--foreground));
+  box-shadow: 0 0 0 1px color-mix(in oklab, var(--foreground) 16%, transparent),
+    0 0 48px -12px color-mix(in oklab, var(--primary) 62%, transparent);
+}
+
+.christmas-snowflake {
+  position: absolute;
+  top: 0;
+  color: color-mix(in oklab, var(--foreground) 94%, var(--primary));
+  filter: drop-shadow(0 0 5px color-mix(in oklab, var(--primary) 75%, transparent));
+  animation: christmas-snowfall 8s linear infinite;
+}
+
+.snow-drift-left { --snow-drift: -2rem; }
+.snow-drift-right { --snow-drift: 2rem; }
+.snow-delay-1 { animation-delay: -1s; animation-duration: 7s; }
+.snow-delay-2 { animation-delay: -3s; animation-duration: 9s; }
+.snow-delay-3 { animation-delay: -5s; animation-duration: 8s; }
+.snow-delay-4 { animation-delay: -7s; animation-duration: 10s; }
+.snow-delay-5 { animation-delay: -2s; animation-duration: 11s; }
+
+.christmas-snow-cap {
+  position: absolute;
+  inset-inline: -2%;
+  z-index: 2;
+  height: 2.15rem;
+  background: color-mix(in oklab, var(--foreground) 96%, var(--primary));
+  filter: drop-shadow(0 5px 7px color-mix(in oklab, var(--primary) 28%, transparent));
+}
+
+.christmas-snow-cap-top {
+  top: -1.2rem;
+  border-radius: 45% 55% 52% 48% / 70% 65% 35% 30%;
+}
+
+.christmas-snow-cap-bottom {
+  bottom: -1.2rem;
+  border-radius: 55% 45% 48% 52% / 35% 30% 70% 65%;
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .festival-lantern {
+  .festival-lantern,
+  .christmas-snowflake {
     animation: none;
   }
 }
