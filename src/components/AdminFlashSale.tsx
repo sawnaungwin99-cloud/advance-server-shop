@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { Flame, RotateCcw, Snowflake, StopCircle } from "lucide-react";
+import { Flame, Leaf, RotateCcw, Snowflake, StopCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
@@ -35,6 +35,7 @@ export function AdminFlashSale() {
     mutationFn: async (patch: {
       is_active?: boolean;
       is_christmas_theme?: boolean;
+      is_summer_theme?: boolean;
       is_thadingyut_theme?: boolean;
       start_at?: string | null;
       ends_at?: string | null;
@@ -96,6 +97,19 @@ export function AdminFlashSale() {
           checked={Boolean(settings?.is_christmas_theme)}
           disabled={save.isPending}
           onCheckedChange={(value) => save.mutate({ is_christmas_theme: value })}
+        />
+      </div>
+
+      <div className="mt-3 flex items-center justify-between gap-4 rounded-xl border border-border/60 bg-secondary/30 px-4 py-3">
+        <Label htmlFor="summer-toggle" className="flex items-center gap-2 text-sm leading-relaxed">
+          <Leaf className="size-4 shrink-0 text-gold" />
+          နွေရာသီ သစ်ရွက်ကြွေအလှ ဖွင့်/ပိတ် (Summer Promotion Decoration)
+        </Label>
+        <Switch
+          id="summer-toggle"
+          checked={Boolean(settings?.is_summer_theme)}
+          disabled={save.isPending}
+          onCheckedChange={(value) => save.mutate({ is_summer_theme: value })}
         />
       </div>
 

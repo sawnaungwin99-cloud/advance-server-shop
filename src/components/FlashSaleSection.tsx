@@ -65,6 +65,59 @@ function ChristmasSnow() {
   );
 }
 
+const LEAF_COLORS = ["#facc15", "#f59e0b", "#d97706", "#b45309", "#eab308"];
+const LEAVES = [
+  { left: "6%", dur: "10s", delay: "0s", scale: 0.8 },
+  { left: "17%", dur: "13s", delay: "-4s", scale: 1.1 },
+  { left: "29%", dur: "11s", delay: "-8s", scale: 0.7 },
+  { left: "42%", dur: "14s", delay: "-2s", scale: 1 },
+  { left: "55%", dur: "12s", delay: "-6s", scale: 0.85 },
+  { left: "67%", dur: "15s", delay: "-10s", scale: 1.15 },
+  { left: "79%", dur: "11s", delay: "-3s", scale: 0.75 },
+  { left: "91%", dur: "13s", delay: "-7s", scale: 0.95 },
+];
+
+function LeafShape({ color }: { color: string }) {
+  return (
+    <svg viewBox="0 0 20 20" className="size-full">
+      <path d="M10 1C4 5 3 12 10 19c7-7 6-14 0-18Z" fill={color} />
+      <path d="M10 3v15" stroke="#78350f" strokeWidth="0.8" opacity=".6" />
+    </svg>
+  );
+}
+
+function Branch({ className, flip }: { className: string; flip?: boolean }) {
+  return (
+    <svg viewBox="0 0 160 110" className={`summer-branch ${className}`} style={flip ? { transform: "scaleX(-1)" } : undefined}>
+      <path d="M0 4C40 10 70 22 100 46s40 40 56 60" stroke="#6b4423" strokeWidth="3.5" fill="none" strokeLinecap="round" />
+      <path d="M38 13c8 10 10 20 8 30M74 30c12-2 24 2 34 0M108 56c-6 10-6 20-2 28" stroke="#7c4a24" strokeWidth="2" fill="none" strokeLinecap="round" />
+      <g transform="translate(40 36) rotate(20)"><path d="M0 0C-5 4-5 10 0 16 5 10 5 4 0 0Z" fill="#d97706" /></g>
+      <g transform="translate(104 26) rotate(-60)"><path d="M0 0C-5 4-5 10 0 16 5 10 5 4 0 0Z" fill="#eab308" /></g>
+      <g transform="translate(103 80) rotate(10)"><path d="M0 0C-5 4-5 10 0 16 5 10 5 4 0 0Z" fill="#b45309" /></g>
+      <g transform="translate(66 22) rotate(-20)"><path d="M0 0C-4 3-4 8 0 13 4 8 4 3 0 0Z" fill="#f59e0b" /></g>
+    </svg>
+  );
+}
+
+function SummerLeaves() {
+  return (
+    <div className="pointer-events-none absolute inset-0 z-10 overflow-hidden rounded-[inherit]" aria-hidden="true">
+      <Branch className="left-0 top-0" />
+      <Branch className="right-0 top-0" flip />
+      {LEAVES.map((l, i) => (
+        <span
+          key={i}
+          className="summer-leaf"
+          style={{ left: l.left, animationDuration: l.dur, animationDelay: l.delay, scale: String(l.scale) }}
+        >
+          <LeafShape color={LEAF_COLORS[i % LEAF_COLORS.length] ?? "#f59e0b"} />
+        </span>
+      ))}
+    </div>
+  );
+}
+
+
 function Unit({ value, label }: { value: number; label: string }) {
   return (
     <div className="min-w-[4.25rem] rounded-xl border border-red-500/40 bg-black/50 px-3 py-2 text-center">
@@ -101,14 +154,16 @@ export function FlashSaleSection({ onBuy }: { onBuy: (p: Plan) => void }) {
   if (!settings?.is_active || cd.done) return null;
 
   const christmas = Boolean(settings.is_christmas_theme);
+  const summer = Boolean(settings.is_summer_theme);
   const thadingyut = Boolean(settings.is_thadingyut_theme) && !christmas;
 
   return (
     <section className="px-4 pb-6">
       <div
-        className={`relative mx-auto max-w-5xl overflow-hidden rounded-3xl border-2 border-red-600/70 bg-gradient-to-b from-red-950/70 via-black/70 to-black/70 p-5 shadow-[0_0_45px_-8px_rgba(239,68,68,0.75)] sm:p-8 ${thadingyut ? "pt-24 sm:pt-28" : ""} ${christmas ? "christmas-sale-card pt-14 sm:pt-16" : ""}`}
+        className={`relative mx-auto max-w-5xl overflow-hidden rounded-3xl border-2 border-red-600/70 bg-gradient-to-b from-red-950/70 via-black/70 to-black/70 p-5 shadow-[0_0_45px_-8px_rgba(239,68,68,0.75)] sm:p-8 ${thadingyut ? "pt-24 sm:pt-28" : ""} ${christmas ? "christmas-sale-card pt-14 sm:pt-16" : ""} ${summer && !christmas && !thadingyut ? "pt-12 sm:pt-14" : ""}`}
       >
         {thadingyut && <ThadingyutLanterns />}
+        {summer && <SummerLeaves />}
         {christmas && <ChristmasSnow />}
         <div className="relative z-20 text-center">
           <span className="inline-flex items-center gap-2 rounded-full border border-red-500/60 bg-red-600/20 px-4 py-1 text-xs font-semibold text-red-200">
