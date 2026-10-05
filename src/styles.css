@@ -247,3 +247,24 @@
     animation: none;
   }
 }
+
+/* Summer falling leaves */
+@keyframes summer-leaf-fall {
+  0% { transform: translate3d(0, -2rem, 0) rotate(0deg); opacity: 0; }
+  10% { opacity: 0.9; }
+  50% { transform: translate3d(1.5rem, 50vh, 0) rotate(180deg); }
+  90% { opacity: 0.8; }
+  100% { transform: translate3d(-1rem, 110vh, 0) rotate(360deg); opacity: 0; }
+}
+.summer-leaf {
+  position: absolute;
+  top: 0;
+  width: 0.9rem;
+  height: 0.9rem;
+  opacity: 0;
+  will-change: transform;
+  animation: summer-leaf-fall 11s linear infinite;
+}
+.summer-branch { position: absolute; width: 7rem; height: 5rem; opacity: 0.85; }
+@media (min-width: 640px) { .summer-branch { width: 10rem; height: 7rem; } }
+@media (prefers-reduced-motion: reduce) { .summer-leaf { animation: none; display: none; } }
