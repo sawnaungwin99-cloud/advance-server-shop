@@ -110,7 +110,7 @@ function SummerLeaves() {
           className="summer-leaf"
           style={{ left: l.left, animationDuration: l.dur, animationDelay: l.delay, scale: String(l.scale) }}
         >
-          <LeafShape color={LEAF_COLORS[i % LEAF_COLORS.length]} />
+          <LeafShape color={LEAF_COLORS[i % LEAF_COLORS.length] ?? "#f59e0b"} />
         </span>
       ))}
     </div>
