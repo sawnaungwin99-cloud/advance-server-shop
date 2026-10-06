@@ -20,6 +20,7 @@ export type Database = {
           id: string
           is_active: boolean
           is_christmas_theme: boolean
+          is_rainy_theme: boolean
           is_summer_theme: boolean
           is_thadingyut_theme: boolean
           start_at: string | null
@@ -30,6 +31,7 @@ export type Database = {
           id?: string
           is_active?: boolean
           is_christmas_theme?: boolean
+          is_rainy_theme?: boolean
           is_summer_theme?: boolean
           is_thadingyut_theme?: boolean
           start_at?: string | null
@@ -40,6 +42,7 @@ export type Database = {
           id?: string
           is_active?: boolean
           is_christmas_theme?: boolean
+          is_rainy_theme?: boolean
           is_summer_theme?: boolean
           is_thadingyut_theme?: boolean
           start_at?: string | null
