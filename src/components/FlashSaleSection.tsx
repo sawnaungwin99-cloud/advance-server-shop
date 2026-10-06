@@ -117,6 +117,58 @@ function SummerLeaves() {
   );
 }
 
+const RAIN_DROPS = [
+  { left: "3%", className: "rain-drop-near rain-delay-1" },
+  { left: "9%", className: "rain-drop-far rain-delay-4" },
+  { left: "15%", className: "rain-drop-mid rain-delay-2" },
+  { left: "22%", className: "rain-drop-near rain-delay-5" },
+  { left: "29%", className: "rain-drop-far rain-delay-3" },
+  { left: "36%", className: "rain-drop-mid rain-delay-1" },
+  { left: "43%", className: "rain-drop-near rain-delay-4" },
+  { left: "50%", className: "rain-drop-far rain-delay-2" },
+  { left: "57%", className: "rain-drop-mid rain-delay-5" },
+  { left: "64%", className: "rain-drop-near rain-delay-3" },
+  { left: "71%", className: "rain-drop-far rain-delay-1" },
+  { left: "78%", className: "rain-drop-mid rain-delay-4" },
+  { left: "85%", className: "rain-drop-near rain-delay-2" },
+  { left: "91%", className: "rain-drop-far rain-delay-5" },
+  { left: "97%", className: "rain-drop-mid rain-delay-3" },
+] as const;
+
+function RainCloud({ className }: { className: string }) {
+  return (
+    <svg viewBox="0 0 240 96" className={`rain-cloud ${className}`}>
+      <defs>
+        <linearGradient id="rain-cloud-fill" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stopColor="var(--rain-cloud-highlight)" />
+          <stop offset="1" stopColor="var(--rain-cloud-shadow)" />
+        </linearGradient>
+      </defs>
+      <path d="M38 81c-20 0-30-13-27-27 3-12 13-20 28-21 7-20 25-30 45-24 11-9 29-11 43-4 11 6 18 16 20 28 22-5 43 8 45 27 2 13-8 21-23 21H38Z" fill="url(#rain-cloud-fill)" />
+      <ellipse cx="103" cy="29" rx="48" ry="24" fill="var(--rain-cloud-glow)" opacity=".24" />
+    </svg>
+  );
+}
+
+function RainySeason() {
+  return (
+    <div className="rainy-atmosphere pointer-events-none absolute inset-0 z-10 overflow-hidden rounded-[inherit]" aria-hidden="true">
+      <div className="rain-haze" />
+      <div className="rain-lightning" />
+      <RainCloud className="rain-cloud-back" />
+      <RainCloud className="rain-cloud-front" />
+      <div className="rain-field">
+        {RAIN_DROPS.map((drop, index) => (
+          <span key={index} className={`rain-drop ${drop.className}`} style={{ left: drop.left }} />
+        ))}
+      </div>
+      <div className="rain-mist" />
+      <span className="rain-edge-drop rain-edge-drop-left" />
+      <span className="rain-edge-drop rain-edge-drop-right" />
+    </div>
+  );
+}
+
 
 function Unit({ value, label }: { value: number; label: string }) {
   return (
@@ -155,16 +207,19 @@ export function FlashSaleSection({ onBuy }: { onBuy: (p: Plan) => void }) {
 
   const christmas = Boolean(settings.is_christmas_theme);
   const summer = Boolean(settings.is_summer_theme);
+  const rainy = Boolean(settings.is_rainy_theme);
   const thadingyut = Boolean(settings.is_thadingyut_theme) && !christmas;
+  const activeSeasonCount = [christmas, summer, rainy].filter(Boolean).length;
 
   return (
     <section className="px-4 pb-6">
       <div
-        className={`relative mx-auto max-w-5xl overflow-hidden rounded-3xl border-2 border-red-600/70 bg-gradient-to-b from-red-950/70 via-black/70 to-black/70 p-5 shadow-[0_0_45px_-8px_rgba(239,68,68,0.75)] sm:p-8 ${thadingyut ? "pt-24 sm:pt-28" : ""} ${christmas ? "christmas-sale-card pt-14 sm:pt-16" : ""} ${summer && !christmas && !thadingyut ? "pt-12 sm:pt-14" : ""}`}
+        className={`relative mx-auto max-w-5xl overflow-hidden rounded-3xl border-2 border-red-600/70 bg-gradient-to-b from-red-950/70 via-black/70 to-black/70 p-5 shadow-[0_0_45px_-8px_rgba(239,68,68,0.75)] sm:p-8 ${thadingyut ? "pt-24 sm:pt-28" : ""} ${christmas ? "christmas-sale-card pt-14 sm:pt-16" : ""} ${summer && !christmas && !thadingyut ? "pt-12 sm:pt-14" : ""} ${rainy ? "rainy-sale-card pt-20 sm:pt-24" : ""} ${activeSeasonCount > 1 ? "seasonal-effects-mixed" : ""}`}
       >
         {thadingyut && <ThadingyutLanterns />}
         {summer && <SummerLeaves />}
         {christmas && <ChristmasSnow />}
+        {rainy && <RainySeason />}
         <div className="relative z-20 text-center">
           <span className="inline-flex items-center gap-2 rounded-full border border-red-500/60 bg-red-600/20 px-4 py-1 text-xs font-semibold text-red-200">
             <Flame className="size-4 animate-pulse text-red-400" /> FLASH SALE

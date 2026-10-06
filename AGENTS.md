@@ -9,5 +9,5 @@
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
 
-- Flash-sale festival decorations are controlled by theme booleans in `flash_sale_settings`; Christmas takes visual priority when multiple themes are enabled.
+- Flash-sale festival decorations use persistent independent theme booleans in `flash_sale_settings`; Christmas only takes priority over Thadingyut, while Summer and Rainy layers combine at reduced intensity.
 - Flash-sale order keys normalize to their regular base plan keys before stock lookup, so one inventory pool serves regular and sale orders.
