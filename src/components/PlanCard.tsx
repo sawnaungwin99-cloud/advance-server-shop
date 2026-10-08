@@ -15,10 +15,12 @@ export function PlanCard({
   plan,
   onBuy,
   sold = 0,
+  isBestSeller = false,
 }: {
   plan: Plan;
   onBuy: (plan: Plan) => void;
   sold?: number;
+  isBestSeller?: boolean;
 }) {
   const { t } = useLang();
   const [open, setOpen] = useState(false);
@@ -28,10 +30,10 @@ export function PlanCard({
     <>
       <div
         className={`metal-card relative flex flex-col rounded-2xl p-6 pt-8 transition-transform duration-300 hover:-translate-y-1 ${
-          plan.popular ? "glow-gold" : ""
+          isBestSeller ? "glow-gold" : ""
         }`}
       >
-        {plan.popular && (
+        {isBestSeller && (
           <span className="absolute -top-3 left-3 max-w-[45%] truncate rounded-full bg-gold px-3 py-1 text-[11px] font-bold text-gold-foreground shadow-lg">
             {t("popular")}
           </span>

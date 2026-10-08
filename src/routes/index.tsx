@@ -15,6 +15,7 @@ import { FLASH_PLANS } from "@/lib/flash-sale";
 
 import { useLang } from "@/lib/i18n";
 import { PLANS, type Plan } from "@/lib/plans";
+import { getBestSellerKey, groupPlanSales } from "@/lib/plan-sales";
 import { useAuth } from "@/hooks/useAuth";
 
 export const Route = createFileRoute("/")({
@@ -27,6 +28,8 @@ export const Route = createFileRoute("/")({
           "Buy trusted Mobile Legends Advance Server accounts from SNW. Free diamonds, early heroes, events and buff/nerf previews. KBZPay & WavePay accepted.",
       },
       { property: "og:title", content: "SNW Advance Server Shop — MLBB Advance Server Accounts" },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
       {
         property: "og:description",
         content: "Trusted Mobile Legends Advance Server accounts. Free diamonds, early heroes, instant delivery in ~5 minutes.",
@@ -48,11 +51,14 @@ function Home() {
     queryFn: async () => {
       const { data, error } = await supabase.rpc("plan_sales_counts");
       if (error) throw error;
-      const map: Record<string, number> = {};
-      for (const row of data ?? []) map[row.plan_key] = Number(row.sold);
-      return map;
+      return groupPlanSales(data ?? []);
     },
+    // Public aggregate polling works for visitors without exposing private orders.
+    refetchInterval: 10_000,
+    refetchOnWindowFocus: true,
   });
+
+  const bestSellerKey = salesByPlan ? getBestSellerKey(PLANS, salesByPlan) : undefined;
 
   const onBuy = (p: Plan) => {
     setPlan(p);
@@ -140,7 +146,7 @@ function Home() {
 
           <div className="grid gap-6 md:grid-cols-3">
             {PLANS.map((p) => (
-              <PlanCard key={p.key} plan={p} onBuy={onBuy} sold={salesByPlan?.[p.key] ?? 0} />
+              <PlanCard key={p.key} plan={p} onBuy={onBuy} sold={salesByPlan?.[p.key] ?? 0} isBestSeller={p.key === bestSellerKey} />
             ))}
           </div>
 
