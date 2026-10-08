@@ -11,3 +11,4 @@
 
 - Flash-sale festival decorations use persistent independent theme booleans in `flash_sale_settings`; Christmas only takes priority over Thadingyut, while Summer and Rainy layers combine at reduced intensity.
 - Flash-sale order keys normalize to their regular base plan keys before stock lookup, so one inventory pool serves regular and sale orders.
+- Storefront sales badges use the public completed-sales aggregate, normalize sale keys to base packages, and poll it for guest-safe updates; never fetch private order rows for badges.
