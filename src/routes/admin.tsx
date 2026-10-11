@@ -25,6 +25,7 @@ import { AdminAnalytics } from "@/components/AdminAnalytics";
 import { AdminFlashSale } from "@/components/AdminFlashSale";
 import { AdminManualOrder } from "@/components/AdminManualOrder";
 import { DeliveredCredentials } from "@/components/DeliveredCredentials";
+import { VoucherButton } from "@/components/VoucherButton";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export const Route = createFileRoute("/admin")({
@@ -322,10 +323,23 @@ function AdminPage() {
                 </dl>
 
                 {o.delivered_username && o.delivered_password && (
-                  <div className="mt-4">
+                  <div className="mt-4 space-y-3">
                     <DeliveredCredentials
                       username={o.delivered_username}
                       password={o.delivered_password}
+                    />
+                    <VoucherButton
+                      data={{
+                        id: o.id,
+                        created_at: o.created_at,
+                        itemName: plan?.titleMy ?? o.plan_key,
+                        price: plan?.priceLabel ?? `${o.price_mmk} MMK`,
+                        customerName: o.full_name,
+                        phone: o.phone,
+                        ign: o.ign,
+                        username: o.delivered_username,
+                        password: o.delivered_password,
+                      }}
                     />
                   </div>
                 )}

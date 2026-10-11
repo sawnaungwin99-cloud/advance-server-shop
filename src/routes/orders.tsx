@@ -6,6 +6,7 @@ import { Send } from "lucide-react";
 import { Header } from "@/components/Header";
 import { TelegramFab } from "@/components/TelegramFab";
 import { DeliveredCredentials } from "@/components/DeliveredCredentials";
+import { VoucherButton } from "@/components/VoucherButton";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
@@ -121,10 +122,23 @@ function OrdersPage() {
                     <div>IGN — <span className="text-foreground/90">{o.ign}</span></div>
                   </dl>
                   {o.delivered_username && o.delivered_password && (
-                    <div className="mt-4">
+                    <div className="mt-4 space-y-3">
                       <DeliveredCredentials
                         username={o.delivered_username}
                         password={o.delivered_password}
+                      />
+                      <VoucherButton
+                        data={{
+                          id: o.id,
+                          created_at: o.created_at,
+                          itemName: plan?.titleMy ?? o.plan_key,
+                          price: plan?.priceLabel ?? `${o.price_mmk} MMK`,
+                          customerName: o.full_name,
+                          phone: o.phone,
+                          ign: o.ign,
+                          username: o.delivered_username,
+                          password: o.delivered_password,
+                        }}
                       />
                     </div>
                   )}
