@@ -106,6 +106,33 @@
   color-scheme: dark;
 }
 
+/* Scoped cinematic palette: pricing and seasonal sections retain their theme. */
+.cinematic-shell {
+  --background: oklch(0.12 0 0);
+  --foreground: oklch(0.98 0 0);
+  --primary: oklch(0.72 0.19 48);
+  --primary-foreground: oklch(0.99 0 0);
+  --secondary: oklch(0.22 0 0);
+  --muted-foreground: oklch(0.79 0.008 70);
+  --accent: oklch(0.27 0.04 48);
+  --accent-foreground: oklch(0.98 0 0);
+  --border: oklch(0.3 0.015 48);
+  --input: oklch(0.3 0.015 48);
+  --ring: var(--primary);
+  --cinematic-shade: linear-gradient(90deg, var(--background) 0%, color-mix(in oklab, var(--background) 88%, transparent) 29%, transparent 73%), linear-gradient(0deg, var(--background), transparent 24%);
+}
+.cinematic-nav-link { font-size: 0.75rem; color: var(--muted-foreground); transition: color 180ms; }
+.cinematic-nav-link:hover { color: var(--primary); background: transparent; }
+.cinematic-wordmark, .cinematic-headline { font-family: "Orbitron", sans-serif; letter-spacing: 0; }
+.cinematic-hero { background: var(--background); border-bottom: 1px solid var(--border); }
+.cinematic-hero-image { object-position: 60% center; }
+.cinematic-hero-shade { background: var(--cinematic-shade); }
+#plans { scroll-margin-top: 7rem; }
+@media (max-width: 639px) {
+  .cinematic-hero-image { object-position: 65% center; opacity: 0.58; }
+  .cinematic-hero-shade { background: linear-gradient(90deg, color-mix(in oklab, var(--background) 90%, transparent), color-mix(in oklab, var(--background) 32%, transparent)), linear-gradient(0deg, var(--background), transparent 70%); }
+}
+
 @layer base {
   * {
     border-color: var(--color-border);
