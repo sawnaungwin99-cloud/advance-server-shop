@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-import { ShieldCheck, Sparkles, Zap, Gift } from "lucide-react";
+import { ShieldCheck, Sparkles, Zap, Gift, ArrowRight, Headphones } from "lucide-react";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Header } from "@/components/Header";
@@ -17,6 +17,8 @@ import { useLang } from "@/lib/i18n";
 import { PLANS, type Plan } from "@/lib/plans";
 import { getBestSellerKey, groupPlanSales } from "@/lib/plan-sales";
 import { useAuth } from "@/hooks/useAuth";
+import { ContactDialog } from "@/components/ContactDialog";
+import cinematicWarrior from "@/assets/cinematic-warrior.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -40,11 +42,12 @@ export const Route = createFileRoute("/")({
 });
 
 function Home() {
-  const { t } = useLang();
+  const { t, lang } = useLang();
   const { user } = useAuth();
   const [plan, setPlan] = useState<Plan | null>(null);
   const [open, setOpen] = useState(false);
   const [referralOpen, setReferralOpen] = useState(false);
+  const [supportOpen, setSupportOpen] = useState(false);
 
   const { data: salesByPlan } = useQuery({
     queryKey: ["plan-sales-counts"],
@@ -88,23 +91,27 @@ function Home() {
       <Header />
 
       <main>
-        <section className="hero-aura relative overflow-hidden px-4 py-16 sm:py-24">
-          <div className="mx-auto max-w-3xl text-center">
-            <span className="inline-flex items-center gap-2 rounded-full border border-primary/40 bg-primary/10 px-4 py-1.5 text-xs text-primary">
+        <section className="cinematic-shell cinematic-hero relative isolate overflow-hidden px-5">
+          <img src={cinematicWarrior} alt="Fantasy warrior in black armor on a fiery battlefield" width={1920} height={1024} fetchPriority="high" className="cinematic-hero-image absolute inset-0 -z-20 h-full w-full object-cover" />
+          <div className="cinematic-hero-shade absolute inset-0 -z-10" />
+          <div className="mx-auto max-w-7xl py-16 sm:py-20 lg:py-24">
+            <div className="max-w-xl">
+            <span className="inline-flex items-center gap-2 border-l-2 border-primary pl-3 text-xs font-semibold text-primary">
               <Sparkles className="size-4" />
-              <span className="snw-gaming text-2xl leading-none sm:text-3xl">SNW GAMING</span>
+              SNW GAMING · MLBB ADVANCE SERVER
             </span>
-            <h1 className="mt-5 text-2xl font-bold leading-snug sm:text-4xl">{t("hero_title")}</h1>
-            <p className="mx-auto mt-4 max-w-2xl text-sm leading-loose text-muted-foreground sm:text-base">
-              {t("hero_sub")}
+            <h1 className="cinematic-headline mt-6 text-4xl font-black leading-[1.12] sm:text-6xl lg:text-7xl">ENTER THE<br /><span className="text-primary">NEXT LEVEL</span></h1>
+            <p className="mt-5 max-w-md text-sm leading-loose text-muted-foreground sm:text-base">
+              {lang === "en" ? "Unlock the future of Mobile Legends. Explore new heroes, enjoy free diamonds, and experience every update first with a trusted Advance Server account." : "Mobile Legends ရဲ့ အသစ်ထွက်မယ့် Hero များ၊ Free Diamonds နှင့် Update များကို အရင်ဆုံး စမ်းသပ်ကစားနိုင်ဖို့ ယုံကြည်စိတ်ချရသော Advance Server အကောင့်များကို ရွေးချယ်လိုက်ပါ။"}
             </p>
-            <Button asChild size="lg" className="mt-8 glow-cyan">
-              <a href="#plans">{t("hero_cta")}</a>
-            </Button>
+            <div className="mt-8 grid gap-3 sm:flex sm:flex-wrap">
+              <Button asChild size="lg" className="h-12 px-6 font-bold"><a href="#plans">EXPLORE PACKAGES <ArrowRight /></a></Button>
+              <Button variant="outline" size="lg" className="h-12 border-primary/50 bg-background/40 px-6" onClick={() => setSupportOpen(true)}><Headphones /> CONTACT SUPPORT</Button>
+            </div>
 
             <div className="mt-4">
               {user && (
-                <Button variant="outline" size="lg" className="glow-cyan border-gold/50 text-gold" onClick={() => setReferralOpen(true)}>
+                <Button variant="outline" size="lg" className="h-auto min-h-10 whitespace-normal border-primary/40 text-primary" onClick={() => setReferralOpen(true)}>
                   <Gift className="size-5" />
                   Advance Server Free ရယူရန်
                 </Button>
@@ -120,18 +127,19 @@ function Home() {
               </Dialog>
             )}
 
-            <div className="mx-auto mt-10 grid max-w-xl grid-cols-3 gap-3 text-xs text-muted-foreground">
-              <div className="metal-card rounded-xl p-3">
-                <Zap className="mx-auto mb-1 size-4 text-gold" />၅ မိနစ်အတွင်း
+            <div className="mt-9 grid max-w-lg grid-cols-3 gap-3 border-t border-primary/20 pt-5 text-center text-[11px] leading-loose text-muted-foreground">
+              <div>
+                <Zap className="mx-auto mb-2 size-4 text-primary" />{lang === "en" ? "~5 min delivery" : "၅ မိနစ်အတွင်း"}
               </div>
-              <div className="metal-card rounded-xl p-3">
+              <div>
                 <ShieldCheck className="mx-auto mb-1 size-4 text-primary" />
-                စိတ်ချရသော ဝန်ဆောင်မှု
+                {lang === "en" ? "Trusted service" : "စိတ်ချရသော ဝန်ဆောင်မှု"}
               </div>
-              <div className="metal-card rounded-xl p-3">
-                <Sparkles className="mx-auto mb-1 size-4 text-gold" />
+              <div>
+                <Sparkles className="mx-auto mb-1 size-4 text-primary" />
                 Free Diamonds
               </div>
+            </div>
             </div>
           </div>
         </section>
@@ -162,6 +170,7 @@ function Home() {
       </footer>
 
       <CheckoutDialog plan={plan} open={open} onOpenChange={setOpen} />
+      <ContactDialog open={supportOpen} onOpenChange={setSupportOpen} />
       <TelegramFab />
 
     </div>
