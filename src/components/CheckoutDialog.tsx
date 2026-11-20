@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { PaymentAccounts } from "@/components/PaymentAccounts";
+import { KbzMerchantCard } from "@/components/KbzMerchantCard";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { notifyOrder } from "@/lib/telegram.functions";
@@ -214,6 +215,7 @@ export function CheckoutDialog({
 
             <div className="space-y-2">
               <p className="text-sm font-semibold text-gold">{t("pay_title")}</p>
+              <KbzMerchantCard />
               <PaymentAccounts />
             </div>
 
