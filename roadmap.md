@@ -1,0 +1,3 @@
+- [ ] Add a privacy-safe feed of real recent completed purchases.
+- [ ] Show a dismissible Burmese purchase ticker without blocking checkout or Telegram.
+- [ ] Verify live data, timing, mobile layout and tests.

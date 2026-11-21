@@ -28,6 +28,8 @@ export const Route = createFileRoute("/auth")({
       { name: "description", content: "Login or create an account to buy Mobile Legends Advance Server accounts from SNW." },
       { property: "og:title", content: "Sign In — SNW Advance Server Shop" },
       { property: "og:description", content: "Login or create an account to buy Mobile Legends Advance Server accounts." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: AuthPage,

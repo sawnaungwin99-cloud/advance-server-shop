@@ -20,6 +20,8 @@ export const Route = createFileRoute("/orders")({
       { name: "description", content: "Track the progress of your Mobile Legends Advance Server account orders." },
       { property: "og:title", content: "My Orders — SNW Advance Server Shop" },
       { property: "og:description", content: "Track the progress of your Advance Server account orders." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: OrdersPage,

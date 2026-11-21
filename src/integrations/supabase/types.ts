@@ -302,6 +302,13 @@ export type Database = {
           sold: number
         }[]
       }
+      recent_completed_sales: {
+        Args: never
+        Returns: {
+          plan_key: string
+          purchased_at: string
+        }[]
+      }
       referral_lookup: { Args: { _code: string }; Returns: string }
       referral_points: { Args: { _user_id: string }; Returns: number }
       referred_orders: {

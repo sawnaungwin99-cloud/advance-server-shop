@@ -29,6 +29,13 @@
       "when": 1791259861169,
       "tag": "0003_add_rainy_theme_to_flash_sale",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1795235760364,
+      "tag": "0004_public_recent_completed_sales",
+      "breakpoints": true
     }
   ]
 }

@@ -11,6 +11,7 @@ import { CheckoutDialog } from "@/components/CheckoutDialog";
 import { TelegramFab } from "@/components/TelegramFab";
 import { FlashSaleSection } from "@/components/FlashSaleSection";
 import { ReferralProgram } from "@/components/ReferralProgram";
+import { RecentSalesTicker } from "@/components/RecentSalesTicker";
 import { FLASH_PLANS } from "@/lib/flash-sale";
 
 import { useLang } from "@/lib/i18n";
@@ -163,6 +164,7 @@ function Home() {
 
       <CheckoutDialog plan={plan} open={open} onOpenChange={setOpen} />
       <TelegramFab />
+      {!open && !referralOpen && <RecentSalesTicker />}
 
     </div>
   );
