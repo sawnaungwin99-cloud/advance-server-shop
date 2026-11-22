@@ -1,5 +1,6 @@
 import { getInventoryPlanKey } from "./inventory-plan";
 import { PLANS } from "./plans";
+import { FLASH_PLANS } from "./flash-sale";
 
 export type RecentSale = { plan_key: string; purchased_at: string };
 const WEEK_MS = 7 * 24 * 60 * 60 * 1000;
@@ -23,4 +24,7 @@ export function recentSaleTime(purchasedAt: string, now: number) {
   if (minutes < 60) return `လွန်ခဲ့သော ${number(minutes)} မိနစ်က`;
   if (minutes < 1440) return `လွန်ခဲ့သော ${number(Math.floor(minutes / 60))} နာရီက`;
   return `လွန်ခဲ့သော ${number(Math.floor(minutes / 1440))} ရက်က`;
+}
+export function recentSalePrice(key: string) {
+  return [...PLANS, ...FLASH_PLANS].find((plan) => plan.key === key)?.priceLabel;
 }

@@ -1,6 +1,6 @@
 import { describe, test } from "node:test";
 import assert from "node:assert/strict";
-import { getRecentSales, recentSalePlanName, recentSaleTime } from "./recent-sales";
+import { getRecentSales, recentSalePlanName, recentSalePrice, recentSaleTime } from "./recent-sales";
 
 const now = Date.parse("2026-11-21T04:35:00Z");
 const sale = (age: number, key = "dual-15000") => ({
@@ -22,6 +22,12 @@ describe("recent purchase feed", () => {
   test("sale packages use the matching regular package name", () => {
     assert.equal(recentSalePlanName("dual-flash-8000"), "Dual Server Account");
     assert.equal(recentSalePlanName("ultimate-flash-15000"), "Ultimate Multi-Server Account");
+  });
+  test("shows the price actually paid", () => {
+    assert.equal(recentSalePrice("basic-8000"), "8,000 MMK");
+    assert.equal(recentSalePrice("dual-flash-8000"), "8,000 MMK");
+    assert.equal(recentSalePrice("dual-15000"), "15,000 MMK");
+    assert.equal(recentSalePrice("ultimate-25000"), "25,000 MMK");
   });
   test("never substitutes a package for an unknown purchase", () => {
     assert.deepEqual(getRecentSales([sale(1000, "unknown")], now), []);

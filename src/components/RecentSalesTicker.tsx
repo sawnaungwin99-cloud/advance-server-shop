@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { BadgeCheck, ShoppingBag, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
-import { getRecentSales, recentSalePlanName, recentSaleTime } from "@/lib/recent-sales";
+import { getRecentSales, recentSalePlanName, recentSalePrice, recentSaleTime } from "@/lib/recent-sales";
 
 export function RecentSalesTicker() {
   const hydrated = useHydrated();
@@ -63,7 +63,7 @@ export function RecentSalesTicker() {
             <BadgeCheck className="size-3.5 shrink-0" aria-hidden="true" /> လတ်တလော ဝယ်ယူမှု
           </p>
           <p className="mt-1 text-xs leading-6 text-foreground">
-            ဝယ်သူတစ်ဦးမှ <span className="font-semibold text-gold">{recentSalePlanName(sale.plan_key)}</span> ဝယ်ယူသွားပါသည်။
+            ဝယ်သူတစ်ဦးမှ <span className="font-semibold text-gold">{recentSalePlanName(sale.plan_key)}</span>{recentSalePrice(sale.plan_key) && <> (<span className="font-semibold text-primary">{recentSalePrice(sale.plan_key)}</span>)</>} ဝယ်ယူသွားပါသည်။
           </p>
           <p className="mt-1 text-[11px] text-muted-foreground">{recentSaleTime(sale.purchased_at, display.now)}</p>
         </div>
