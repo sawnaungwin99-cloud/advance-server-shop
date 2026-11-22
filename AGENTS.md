@@ -13,3 +13,5 @@
 - Flash-sale order keys normalize to their regular base plan keys before stock lookup, so one inventory pool serves regular and sale orders.
 - Storefront sales badges use the public completed-sales aggregate, normalize sale keys to base packages, and poll it for guest-safe updates; never fetch private order rows for badges.
 - Recent-sales notifications use a bounded public RPC containing only package and purchase time, never customer identities or private order fields; this preserves guest access without exposing orders.
+- Google sign-in uses the generated Lovable auth helper with a public same-origin return URL; raw provider OAuth bypasses managed credentials and fails.
+- External Netlify hosting redirects the managed OAuth entry path to the Lovable-served app while preserving its query; external return domains must be allow-listed in Cloud Auth settings.

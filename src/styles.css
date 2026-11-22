@@ -83,6 +83,9 @@
   --sidebar-accent-foreground: oklch(0.95 0.008 240);
   --sidebar-border: oklch(0.33 0.028 250);
   --sidebar-ring: oklch(0.82 0.15 195);
+  --google-button-background: #131314;
+  --google-button-border: #8E918F;
+  --google-button-foreground: #E3E3E3;
 
   --gradient-hero: radial-gradient(
       ellipse 80% 60% at 50% -10%,
@@ -104,6 +107,13 @@
 
 .dark {
   color-scheme: dark;
+}
+
+.google-sign-in,
+.google-sign-in:hover {
+  background: var(--google-button-background);
+  border-color: var(--google-button-border);
+  color: var(--google-button-foreground);
 }
 
 @layer base {

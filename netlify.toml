@@ -27,3 +27,12 @@
 [build.environment]
   NITRO_PRESET = "netlify"
   NODE_VERSION = "20"
+
+# Managed Google OAuth must start on a Lovable-served host. Netlify forwards
+# the original provider/state/redirect_uri query parameters with this redirect;
+# the broker returns the customer to the allow-listed external site afterward.
+[[redirects]]
+  from = "/~oauth/initiate"
+  to = "https://snwadvshops.lovable.app/~oauth/initiate"
+  status = 302
+  force = true
