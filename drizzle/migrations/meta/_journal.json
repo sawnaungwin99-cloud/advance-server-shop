@@ -36,6 +36,13 @@
       "when": 1795235760364,
       "tag": "0004_public_recent_completed_sales",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1795481398009,
+      "tag": "0005_recent_sales_masked_name",
+      "breakpoints": true
     }
   ]
 }

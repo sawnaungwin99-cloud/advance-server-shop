@@ -305,6 +305,7 @@ export type Database = {
       recent_completed_sales: {
         Args: never
         Returns: {
+          buyer_label: string
           plan_key: string
           purchased_at: string
         }[]

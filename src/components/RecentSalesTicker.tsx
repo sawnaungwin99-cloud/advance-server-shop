@@ -63,7 +63,7 @@ export function RecentSalesTicker() {
             <BadgeCheck className="size-3.5 shrink-0" aria-hidden="true" /> လတ်တလော ဝယ်ယူမှု
           </p>
           <p className="mt-1 text-xs leading-6 text-foreground">
-            ဝယ်သူတစ်ဦးမှ <span className="font-semibold text-gold">{recentSalePlanName(sale.plan_key)}</span>{recentSalePrice(sale.plan_key) && <> (<span className="font-semibold text-primary">{recentSalePrice(sale.plan_key)}</span>)</>} ဝယ်ယူသွားပါသည်။
+            {sale.buyer_label ? <span className="font-semibold text-foreground">{sale.buyer_label}</span> : "ဝယ်ယူသူတစ်ဦး"} မှ <span className="font-semibold text-gold">{recentSalePlanName(sale.plan_key)}</span>{recentSalePrice(sale.plan_key) && <> (<span className="font-semibold text-primary">{recentSalePrice(sale.plan_key)}</span>)</>} ဝယ်ယူသွားပါသည်။
           </p>
           <p className="mt-1 text-[11px] text-muted-foreground">{recentSaleTime(sale.purchased_at, display.now)}</p>
         </div>

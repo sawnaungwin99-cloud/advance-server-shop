@@ -2,7 +2,7 @@ import { getInventoryPlanKey } from "./inventory-plan";
 import { PLANS } from "./plans";
 import { FLASH_PLANS } from "./flash-sale";
 
-export type RecentSale = { plan_key: string; purchased_at: string };
+export type RecentSale = { plan_key: string; purchased_at: string; buyer_label?: string | null };
 const WEEK_MS = 7 * 24 * 60 * 60 * 1000;
 
 export function getRecentSales(rows: RecentSale[], now: number) {

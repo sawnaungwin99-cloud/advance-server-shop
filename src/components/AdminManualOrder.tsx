@@ -27,6 +27,7 @@ export function AdminManualOrder() {
   const [open, setOpen] = useState(false);
   const [planKey, setPlanKey] = useState(PLANS[0]?.key ?? "");
   const [amount, setAmount] = useState(String(PLANS[0]?.price ?? ""));
+  const [buyerName, setBuyerName] = useState("");
   const [file, setFile] = useState<File | null>(null);
   const [saving, setSaving] = useState(false);
 
@@ -54,7 +55,7 @@ export function AdminManualOrder() {
         user_id: uid,
         plan_key: planKey,
         price_mmk: Math.round(price),
-        full_name: "Telegram (ပြင်ပအရောင်း)",
+        full_name: buyerName.trim().slice(0, 100) || "Telegram (ပြင်ပအရောင်း)",
         phone: "-",
         target_gmail: "manual@telegram.local",
         ign: "-",
@@ -71,6 +72,7 @@ export function AdminManualOrder() {
       qc.invalidateQueries({ queryKey: ["plan-sales"] });
       setOpen(false);
       setFile(null);
+      setBuyerName("");
     } catch (e) {
       toast.error(e instanceof Error ? e.message : "စာရင်းသွင်း၍ မရပါ။");
     } finally {
@@ -112,6 +114,11 @@ export function AdminManualOrder() {
                 ))}
               </SelectContent>
             </Select>
+          </div>
+
+          <div>
+            <Label className="text-xs text-muted-foreground">ဝယ်ယူသူအမည် (မထည့်လည်းရပါသည်)</Label>
+            <Input maxLength={100} value={buyerName} onChange={(e) => setBuyerName(e.target.value)} placeholder="ဥပမာ - Aung Aung" />
           </div>
 
           <div>
